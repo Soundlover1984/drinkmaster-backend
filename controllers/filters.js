@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { controllerWrapper, HttpError } = require("../helpers");
-const { Ingredient } = require("../models/Ingredient");
+const { Ingredient } = require("../models/ingredient");
 
 const categoriesPath = path.join(__dirname, "../", "db", "categories.json");
 const glassesPath = path.join(__dirname, "../", "db", "glasses.json");
@@ -15,7 +15,15 @@ const getCategories = async (req, res) => {
 };
 
 const getIngredients = async (req, res) => {
-    const result = await Ingredient.find({title: 1}).sort();
+
+  // const condition = !req.user.isAdult ? "No" : /^(?:Yes\b|No\b)/;
+  // const result = await Ingredient.find(
+  //   {
+  //     alcohol: condition,
+  //   },
+  //   { title: 1 }
+  // ).sort();
+    const result = await Ingredient.find().sort({title: 1});
     if (!result) throw HttpError(404, "Not Found");
     res.json(result);
   };
