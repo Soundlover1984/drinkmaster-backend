@@ -1,12 +1,16 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require("dotenv").config();
+
 
 const usersRouter = require("./routes/api/users");
 const authRouter = require("./routes/api/auth");
+
 // const drinksRouter = require("./routes/api/drinks");
-// const filtersRouter = require("./routes/api/filters");
+const filtersRouter = require("./routes/api/filters");
 
 const app = express();
 
@@ -19,8 +23,11 @@ app.use(express.static("public"));
 
 app.use("/users", usersRouter);
 app.use("/api/auth", authRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // app.use("/api/drinks", drinksRouter);
-// app.use("/api/filters", filtersRouter);
+app.use("/api/filters", filtersRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
