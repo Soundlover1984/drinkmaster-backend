@@ -16,14 +16,14 @@ const getCategories = async (req, res) => {
 
 const getIngredients = async (req, res) => {
 
-  // const condition = !req.user.isAdult ? "No" : /^(?:Yes\b|No\b)/;
-  // const result = await Ingredient.find(
-  //   {
-  //     alcohol: condition,
-  //   },
-  //   { title: 1 }
-  // ).sort();
-    const result = await Ingredient.find().sort({title: 1});
+  const condition = !req.user.isAdult ? "No" : /^(?:Yes\b|No\b)/;
+  const result = await Ingredient.find(
+    {
+      alcohol: condition,
+    },
+    { title: 1 }
+  ).sort();
+    // const result = await Ingredient.find().sort({title: 1});
     if (!result) throw HttpError(404, "Not Found");
     res.json(result);
   };
