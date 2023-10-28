@@ -114,6 +114,9 @@ const drinkSchema = new Schema(
         ref: "user",
       },
     ],
+    populate: {
+      type: Number,
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
