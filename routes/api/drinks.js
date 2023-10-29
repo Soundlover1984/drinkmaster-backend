@@ -11,8 +11,8 @@ const router = express.Router();
 
 
 router.get("/:id", authenticate, isValidId, ctrl.getDrinkById);
-// router.get("/mainpage", authenticate, ctrl.getMainPageDrinks);
-router.get("/popular", authenticate, ctrl.getPopularDrinks);
+router.get("/mainpage", authenticate, ctrl.getMainPageDrinks);
+// router.get("/popular", authenticate, ctrl.getPopularDrinks);
 // router.get("/search", authenticate, ctrl.getSearchDrinks);
 // router.post("/own/add", authenticate, ctrl.addOwnDrink);
 // router.delete("/own/remove/:id", authenticate, ctrl.removeOwnDrink);

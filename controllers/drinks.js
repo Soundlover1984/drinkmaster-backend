@@ -4,6 +4,10 @@ const {
   schemas,
 } = require("../models/drink");
 const { Ingredient } = require("../models/ingredient");
+const path = require("path");
+const fs = require("fs/promises");
+const categoriesPath = path.join(__dirname, "../", "db", "categories.json");
+
 
 
 const getDrinkById = async (req, res) => {
@@ -17,53 +21,28 @@ const getDrinkById = async (req, res) => {
   res.json(drinkById);
 };
 
-const getPopularDrinks = async (req, res) => {
-  const isAdult = req.user && req.user.isAdult;
 
-  let getByCondition;
-
-  if (isAdult) {
-    getByCondition = { populate: { $gte: 0 }, alcoholic: /(?:Non alcoholic)\b/ };
-  } else {
-    getByCondition = { populate: { $gte: 0 }, alcoholic: "Non alcoholic" };
+const getMainPageDrinks = async (req, res) => {
+  const {isAdult} = req.user;
+  const drinks = {};
+  const categories = await fs.readFile(categoriesPath);
+  const parsedCategories = JSON.parse(categories);
+  for (const category of parsedCategories) {
+    drinks[category] = await Drink.find(
+      !isAdult
+        ? {
+            category,
+            alcoholic: "Non alcoholic",
+          }
+        : { category }
+    )
+      .sort({ createdAt: -1 })
+      .limit(3);
   }
 
-  const popularDrinks = await Drink.find(getByCondition, {
-    drink: 1,
-    category: 1,
-    alcoholic: 1,
-    populate: 1,
-    description: 1,
-    drinkThumb: 1
-  }).sort({ populate: -1 });
+  res.json(drinks);
+};
 
-  if (popularDrinks.length === 0) {
-    throw HttpError(404, "No popular recipes yet");
-  }
-
-  res.json(popularDrinks);
-}
-
-
-// const getPopularDrinks = async (req, res) => {
-
-//   const condition = !req.user.isAdult
-//   ? "Non alcoholic"
-//   : /^(?:Alcoholic\b|Non alcoholic\b)/;
-
-//  let getByCondition = { populate: {$gte : 0}, alcoholic: condition };
-//  if (isAdult) { getByCondition = { populate: {$gte : 0} } };
-
-//  const popularDrinks = await Drink.find(getByCondition, 
-//      {drink:1, category:1,alcoholic:1, populate:1, description:1, drinkThumb:1 }).sort({populate:-1})
-
-//  if (!popularDrinks) {
-//      throw HttpError(404, "No popular recipes yet");
-//  }
-//  res.json(popularDrinks);
-// }
-
-// const getMainPageDrinks = async (req, res) => {
 
 // const getSearchDrinks = async (req, res) => {
 
@@ -79,12 +58,16 @@ const getPopularDrinks = async (req, res) => {
 
 // removeOwnDrink = async (req, res) => {
 
+// const getPopularDrinks = async (req, res) => {
+  
+// }
+
 
 
 module.exports = {
   getDrinkById: controllerWrapper(getDrinkById),
-  getPopularDrinks: controllerWrapper(getPopularDrinks),
-  // getMainPageDrinks: controllerWrapper(getMainPageDrinks),
+  // getPopularDrinks: controllerWrapper(getPopularDrinks),
+  getMainPageDrinks: controllerWrapper(getMainPageDrinks),
   // getSearchDrinks: controllerWrapper(getSearchDrinks),
   // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
