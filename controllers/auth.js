@@ -1,5 +1,9 @@
 const { controllerWrapper } = require("../helpers");
-const { registerUser, loginUser } = require("../services/userService");
+const {
+  registerUser,
+  loginUser,
+  logOutUser,
+} = require("../services/userService");
 
 const signup = controllerWrapper(async (req, res) => {
   const { user, token } = await registerUser(req.body);
@@ -21,7 +25,14 @@ const singin = controllerWrapper(async (req, res) => {
   });
 });
 
+const singout = controllerWrapper(async (req, res) => {
+  await logOutUser(req.user.id);
+
+  res.sendStatus(204);
+});
+
 module.exports = {
   signup,
   singin,
+  singout,
 };

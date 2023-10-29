@@ -2,6 +2,9 @@ const { HttpError } = require("../helpers");
 const User = require("../models/user");
 const { signToken } = require("./jwtService");
 const checkPassword = require("./passwordService");
+const Email = require("../services/emailService");
+const uploadAvatar = require("./cloudinaryService");
+const multer = require("multer");
 
 exports.registerUser = async (userData) => {
   const newUser = await User.create({ ...userData });
@@ -30,6 +33,43 @@ exports.loginUser = async (userData) => {
   await User.findByIdAndUpdate(user.id, { token });
 
   return { user, token };
+};
+
+exports.logOutUser = async (id) => {
+  const user = await User.findByIdAndUpdate(id, { token: "" });
+
+  return;
+};
+
+exports.updateUser = async (userData, user, file) => {
+  if (file) {
+    user.avatar = file.path;
+  }
+
+  Object.keys(userData).forEach((key) => {
+    user[key] = userData[key];
+  });
+
+  return user.save();
+};
+
+exports.subscribeUser = async (userData) => {
+  const { id } = userData;
+  const user = await User.findById(id);
+
+  if (!user) HttpError(404);
+
+  try {
+    await new Email(user, "").sendHello();
+  } catch (error) {
+    HttpError(404);
+  }
+
+  const subscribeUser = await User.findByIdAndUpdate(user.id, {
+    subscribe: true,
+  });
+
+  return subscribeUser;
 };
 
 exports.checkUserExists = async (filter) => {
