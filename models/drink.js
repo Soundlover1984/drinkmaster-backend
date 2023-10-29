@@ -97,10 +97,16 @@ const drinkSchema = new Schema(
         },
       },
     ],
+    favorites: {
+      type: Array,
+    },
+    populate: {
+      type: Number,
+    },
     shortDescription: String,
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     users: [String],
   },
