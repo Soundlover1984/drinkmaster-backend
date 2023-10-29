@@ -2,9 +2,9 @@ const { HttpError } = require("../helpers");
 const { isValidObjectId } = require("mongoose");
 
 const isValidIdBody = (req, res, next) => {
-  const { recipeId } = req.body;
+  const { id } = req.body;
 
-  if (!isValidObjectId(recipeId)) {
+  if (!isValidObjectId(id)) {
     next(HttpError(404, "Not valid id"));
   }
   next();
@@ -13,5 +13,4 @@ const isValidIdBody = (req, res, next) => {
 
 module.exports = {
   isValidIdBody,
-
 };

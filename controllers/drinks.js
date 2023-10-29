@@ -105,9 +105,9 @@ const getPopularDrinks = async (req, res) => {
 }
 
 const addFavoriteDrink = async (req, res) => {
-   const {recipeId} = req.body;
+   const {id} = req.body;
     const userId = req.user.id;
-    const drink = await Drink.findById(recipeId);
+    const drink = await Drink.findById(id);
     const user = await User.findById({_id: userId});
     const firstFavoriteAnswer = user.firstFavorite;
     const idx = drink.favorites.findIndex(elem => elem === userId );
@@ -144,7 +144,7 @@ module.exports = {
   getMainPageDrinks: controllerWrapper(getMainPageDrinks),
   getSearchDrinks: controllerWrapper(getSearchDrinks),
   getPopularDrinks: controllerWrapper(getPopularDrinks),
-   addFavoriteDrink: controllerWrapper(addFavoriteDrink),
+  addFavoriteDrink: controllerWrapper(addFavoriteDrink),
   // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
   // removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
