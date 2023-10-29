@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const { model, Schema } = require("mongoose");
 const { fullYearsCalculate } = require("../helpers");
+const crypto = require("crypto");
 
 const userSchema = new Schema(
   {
@@ -8,7 +9,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    birthData: {
+    birthDate: {
       type: String,
       required: true,
     },
@@ -29,6 +30,11 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    avatar: String,
+    subscribe: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -36,10 +42,16 @@ const userSchema = new Schema(
   }
 );
 userSchema.pre("save", async function (next) {
-  const fullYears = await fullYearsCalculate(this.birthData);
+  if (this.isNew) {
+    const emailHash = crypto.createHash("md5").update(this.email).digest("hex");
+    this.avatar = `https://www.gravatar.com/avatar/${emailHash}.jpg?d=wavatar`;
+  }
+  const fullYears = await fullYearsCalculate(this.birthDate);
   if (fullYears >= 18) {
     this.isAdult = true;
   }
+
+  if (!this.isModified("password")) return next();
 
   const salt = await bcrypt.genSalt(10);
 
