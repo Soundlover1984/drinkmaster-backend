@@ -6,12 +6,11 @@ const {
 } = require("../services/userService");
 
 const signup = controllerWrapper(async (req, res) => {
-  const { user, token } = await registerUser(req.body);
+  const { user } = await registerUser(req.body);
 
   res.status(201).json({
     message: "Created",
     user,
-    token,
   });
 });
 

@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "version": "2.0.2",
-    "title": "Swagger test",
+    "title": "Swagger Drinkmaster",
     "description": "Showing off swagger-ui-express",
     "license": {
       "name": "MIT",
@@ -11,20 +11,26 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3000" }],
+  "servers": [
+    { "url": "http://localhost:3000" },
+    { "url": "https://drink-master-app.onrender.com" }
+  ],
   "tags": [
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "Users endpoints"
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/api/auth/signup": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -38,7 +44,7 @@
         },
         "responses": {
           "201": {
-            "description": "Successful operation",
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
@@ -52,23 +58,177 @@
             "content": {}
           },
           "409": {
-            "description": "Provided email already exists",
+            "description": "Email already exist.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User authorisation",
+        "parameters": [],
+        "requestBody": {
+          "description": "Authorisation's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorisationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorisationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/signout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Logout",
+          "required": false,
+          "content": []
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {}
           }
         }
       }
     }
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "birthDate"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Test"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "User's birthDate",
+            "example": "20 Aug 2000"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Test"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "User's birthDate",
+            "example": "20 Aug 2000"
+          },
+          "userId": {
+            "type": "number",
+            "description": "User's id",
+            "example": "32143232436545474"
+          },
+          "isAdult": {
+            "type": "boolein",
+            "description": "",
+            "example": "true"
+          },
+          "subscribe": {
+            "type": "boolein",
+            "description": "subscribe",
+            "example": "true"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "avatar",
+            "example": "https//www.gravatar.com/avatar"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "User's refreshToken",
+            "example": "d113fc3f8c70bc958ff763c03bcc5ebbc563bb313386f922da4a891bf3049624"
+          }
+        },
+        "example": {
+          "name": "example",
+          "email": "1example@gmail.com",
+          "birthData": "20 Aug 2010",
+          "isAdult": "true",
+          "subscribe": "true",
+          "userId": "1573839013698358109",
+          "avatar": "https//www.gravatar.com/avatar",
+          "refreshToken": "d113fc3f8c70bc958ff763c03bcc5ebbc563bb313386f922da4a891bf3049624"
+        }
+      },
+      "AuthorisationRequest": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "test@example.com"
           },
           "password": {
             "type": "string",
@@ -77,27 +237,25 @@
           }
         }
       },
-      "RegistrationResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email"
-            },
-            "userId": {
-              "type": "number",
-              "description": "User's id",
-              "example": "32143232436545474"
-            }
+      "AuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test@example.com"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "d113fc3f8c70bc958ff763c03bcc5ebbc563bb313386f922da4a891bf3049624"
           }
         },
-        "example": [
-          { "email": "1@gmail.com", "userId": "1" },
-          { "email": "2@gmail.com", "userId": "2" }
-        ]
+        "example": {
+          "email": "1example@gmail.com",
+          "token": "d113fc3f8c70bc958ff763c03bcc5ebbc563bb313386f922da4a891bf3049624"
+        }
       }
     },
     "securitySchemes": {
