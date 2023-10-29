@@ -3,7 +3,9 @@ const {
   Drink,
   schemas,
 } = require("../models/drink");
+const User  = require("../models/user");
 const { Ingredient } = require("../models/ingredient");
+
 const path = require("path");
 const fs = require("fs/promises");
 const categoriesPath = path.join(__dirname, "../", "db", "categories.json");
@@ -102,7 +104,27 @@ const getPopularDrinks = async (req, res) => {
     });
 }
 
-// const addFavoriteDrink = async (req, res) => {
+const addFavoriteDrink = async (req, res) => {
+   const {recipeId} = req.body;
+    const userId = req.user.id;
+    const drink = await Drink.findById(recipeId);
+    const user = await User.findById({_id: userId});
+    const firstFavoriteAnswer = user.firstFavorite;
+    const idx = drink.favorites.findIndex(elem => elem === userId );
+    if ( idx < 0) { drink.favorites.push(userId);
+        if (drink.populate) { drink.populate += 1 } else {drink.populate = 1}
+        await drink.save() 
+        if (user.firstFavorite) { user.firstFavorite = false; await user.save(); }
+    } else {
+            throw HttpError(404, 'Drink has already been added!');
+        }
+    res.status(201).json({
+        code: 201,
+        message: 'Success operation',
+        firstFavorite: firstFavoriteAnswer,
+        data: drink,
+    });
+}
 
 // const getFavoriteDrinks = async (req, res) => {
 
@@ -122,7 +144,7 @@ module.exports = {
   getMainPageDrinks: controllerWrapper(getMainPageDrinks),
   getSearchDrinks: controllerWrapper(getSearchDrinks),
   getPopularDrinks: controllerWrapper(getPopularDrinks),
-   // addFavoriteDrink: controllerWrapper(addFavoriteDrink),
+   addFavoriteDrink: controllerWrapper(addFavoriteDrink),
   // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
   // removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
