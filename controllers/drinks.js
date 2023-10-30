@@ -84,7 +84,34 @@ const getSearchDrinks = async (req, res) => {
   });
 }
 
-// const getPopularDrinks = async (req, res) => {};
+const getPopularDrinks = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const condition = !req.user.isAdult
+  ? "Non alcoholic"
+  : /^(?:Alcoholic\b|Non alcoholic\b)/;
+
+  const result = await Drink.aggregate([
+    {
+      $addFields: {
+        popularity: {
+          $cond: {
+            if: { $isArray: "$users" },
+            then: { $size: "$users" },
+            else: 0,
+          },
+        },
+      },
+    },
+    {
+      $sort: { popularity: -1 }, 
+    },
+  ]).match({ alcoholic: condition })
+    .skip(skip)
+    .limit(limit);
+
+  res.json(result);
+};
 
 
 const addFavoriteDrink = async (req, res) => {
@@ -128,7 +155,7 @@ module.exports = {
   getMainPageDrinks: controllerWrapper(getMainPageDrinks),
   getSearchDrinks: controllerWrapper(getSearchDrinks),
   addFavoriteDrink: controllerWrapper(addFavoriteDrink),
-  // getPopularDrinks: controllerWrapper(getPopularDrinks),
+  getPopularDrinks: controllerWrapper(getPopularDrinks),
   // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
   // removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
