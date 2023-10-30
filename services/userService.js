@@ -3,17 +3,30 @@ const User = require("../models/user");
 const { signToken } = require("./jwtService");
 const checkPassword = require("./passwordService");
 const Email = require("../services/emailService");
-const uploadAvatar = require("./cloudinaryService");
-const multer = require("multer");
+const crypto = require("crypto");
 
 exports.registerUser = async (userData) => {
-  const newUser = await User.create({ ...userData });
+  const { email } = userData;
+  const user = await User.findOne({ email });
+  if (user) {
+    throw HttpError(409, "Email already exist.");
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  const refreshToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  // const resetExpires = Date.now() + 10 * 60 * 1000;
+
+  const newUser = await User.create({
+    ...userData,
+    refreshToken,
+  });
 
   newUser.password = undefined;
 
-  const token = signToken(newUser.id);
-
-  return { user: newUser, token };
+  return { user: newUser };
 };
 
 exports.loginUser = async (userData) => {
@@ -30,7 +43,7 @@ exports.loginUser = async (userData) => {
   user.password = undefined;
 
   const token = signToken(user.id);
-  await User.findByIdAndUpdate(user.id, { token });
+  await User.findByIdAndUpdate(user.id, { token, refreshToken: null });
 
   return { user, token };
 };
