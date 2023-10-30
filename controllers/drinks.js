@@ -194,7 +194,41 @@ const removeFavoriteDrink = async (req, res) => {
   res.json({ result });
 };
 
-// const addOwnDrink = async (req, res) =>  {};
+const addOwnDrink = async (req, res) =>  {
+  const { _id: owner } = req.user;
+  const { ingredients } = req.body;
+  const parsedIngredients = JSON.parse(ingredients);
+
+  let drinkThumb = "";
+  if (req.file) {drinkThumb = req.file.path;}
+
+  const ingredientsArr = [];
+
+  for (const ingredient of parsedIngredients) {
+    const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
+
+    if (!ingredientInfo) {
+      throw HttpError(404, "Not Found");
+    }
+
+    const { _id: ingredientId, title } = ingredientInfo;
+
+    ingredientsArr.push({
+      title,
+      ...ingredient,
+      ingredientId,
+    });
+  }
+
+  const drink = await Drink.create({
+    ...req.body,
+    owner,
+    drinkThumb,
+    ingredients: ingredientsArr,
+  });
+
+  res.status(201).json(drink);
+};
 
 // const getOwnDrinks = async (req, res) => {
 
@@ -212,6 +246,6 @@ module.exports = {
   getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
-  // addOwnDrink: controllerWrapper(addOwnDrink),
+  addOwnDrink: controllerWrapper(addOwnDrink),
   // removeOwnDrink: controllerWrapper(removeOwnDrink),
 };

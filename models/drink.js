@@ -186,11 +186,12 @@ const addDrinkSchema = Joi.object({
       .messages({ "any.required": "The ingredients field is required" })
   ),
   instructions: Joi.string(),
+  drinkThumb: Joi.string(),
 });
 
 
-const schemas = {
-  addDrinkSchema,
-};
+// const schemas = {
+//   addDrinkSchema,
+// };
 
-module.exports = { Drink , schemas };
+module.exports = { Drink , addDrinkSchema };
