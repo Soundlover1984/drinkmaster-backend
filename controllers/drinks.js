@@ -79,52 +79,36 @@ const getSearchDrinks = async (req, res) => {
   res.status(200).json({
       code: 200,
       message: 'Success operation',
-      quantityPerPage: drinks.length,
       quantityTotal: resultCount,
       data: drinks,
   });
 }
 
-const getPopularDrinks = async (req, res) => {
-  const { isAdult } = req.user;
- 
-    let getByCondition = { populate: {$gte : 0}, alcoholic: "Non alcoholic" };
-    if (isAdult) { getByCondition = { populate: {$gte : 0} } };
+// const getPopularDrinks = async (req, res) => {};
 
-    const drinks = await Drink.find(getByCondition, 
-        {drink:1, category:1,alcoholic:1, populate:1, description:1, drinkThumb:1 }).sort({populate:-1})
-
-    if (!drinks) {
-        throw HttpError(404, "No popular drinks yet");
-    }
-    res.status(200).json({
-        code: 200,
-        message: 'Success operation',
-        data: drinks,
-    });
-}
 
 const addFavoriteDrink = async (req, res) => {
-   const {id} = req.body;
-    const userId = req.user.id;
-    const drink = await Drink.findById(id);
-    const user = await User.findById({_id: userId});
-    const firstFavoriteAnswer = user.firstFavorite;
-    const idx = drink.favorites.findIndex(elem => elem === userId );
-    if ( idx < 0) { drink.favorites.push(userId);
-        if (drink.populate) { drink.populate += 1 } else {drink.populate = 1}
-        await drink.save() 
-        if (user.firstFavorite) { user.firstFavorite = false; await user.save(); }
-    } else {
-            throw HttpError(404, 'Drink has already been added!');
-        }
-    res.status(201).json({
-        code: 201,
-        message: 'Success operation',
-        firstFavorite: firstFavoriteAnswer,
-        data: drink,
-    });
+const { id } = req.params;
+const { _id: userId } = req.user;
+const drink = await Drink.findById(id);
+if (!drink) {
+  throw HttpError(404, "Not Found");
 }
+if (!drink.users) {
+  drink.users = [];
+}
+const isFavorite = drink.users.includes(userId);
+let result;
+if (isFavorite) {
+  throw HttpError(409, `${drink.drink} is already in your favorites.`);
+} else {
+  result = await Drink.findByIdAndUpdate(
+    drink._id,
+    { $push: { users: userId } },
+    { new: true }
+  );
+}
+res.json({ result });};
 
 // const getFavoriteDrinks = async (req, res) => {
 
@@ -143,8 +127,8 @@ module.exports = {
   getDrinkById: controllerWrapper(getDrinkById),
   getMainPageDrinks: controllerWrapper(getMainPageDrinks),
   getSearchDrinks: controllerWrapper(getSearchDrinks),
-  getPopularDrinks: controllerWrapper(getPopularDrinks),
   addFavoriteDrink: controllerWrapper(addFavoriteDrink),
+  // getPopularDrinks: controllerWrapper(getPopularDrinks),
   // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
   // removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),

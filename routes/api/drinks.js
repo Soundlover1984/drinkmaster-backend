@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 router.get("/mainpage", authenticate, ctrl.getMainPageDrinks);
-router.get("/popular", authenticate, ctrl.getPopularDrinks);
+// router.get("/popular", authenticate, ctrl.getPopularDrinks);
 router.get("/search", authenticate, ctrl.getSearchDrinks);
 // router.post("/own/add", authenticate, ctrl.addOwnDrink);
 // router.delete("/own/remove/:id", authenticate, ctrl.removeOwnDrink);
@@ -20,7 +20,7 @@ router.get("/search", authenticate, ctrl.getSearchDrinks);
 // router.delete("/favorite/remove/:id", authenticate, ctrl.removeFavoriteDrink);
 // router.get("/favorite/all", authenticate, ctrl.getFavoriteDrinks);
 router.get("/:id", authenticate, isValidId, ctrl.getDrinkById);
-router.post("/favorite/add/:id", authenticate, isValidIdBody, ctrl.addFavoriteDrink);
+router.post("/favorite/add/:id", authenticate, ctrl.addFavoriteDrink);
 
 
 

@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 const Joi = require("joi");
+const { string } = require("joi");
 
 
 const drinkSchema = new Schema(
@@ -97,16 +98,10 @@ const drinkSchema = new Schema(
         },
       },
     ],
-    favorites: {
-      type: Array,
-    },
-    populate: {
-      type: Number,
-    },
     shortDescription: String,
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "users",
+      ref: "user",
     },
     users: [String],
   },
