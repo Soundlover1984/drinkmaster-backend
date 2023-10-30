@@ -137,11 +137,64 @@ if (isFavorite) {
 }
 res.json({ result });};
 
-// const getFavoriteDrinks = async (req, res) => {
+
+
+const getFavoriteDrinks = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+
+  const result = await Drink.find({
+    users: {
+      $elemMatch: {
+        $eq: userId,
+      },
+    },
+  }).sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  const totalOwnDrinks = await Drink.countDocuments({
+    users: {
+      $elemMatch: {
+        $eq: userId,
+      },
+    },
+  });
+
+  res.json({ total: totalOwnDrinks, drinks: result });
+};
+
+const removeFavoriteDrink = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+
+  const drink = await Drink.findById(id);
+
+  if (!drink) {
+    throw HttpError(404, "Not Found");
+  }
+
+  const isFavorite = drink.users.includes(userId);
+
+  let result;
+
+  if (isFavorite) {
+    result = await Drink.findByIdAndUpdate(
+      drink._id,
+      {
+        $pull: { users: userId },
+      },
+      { new: true }
+    );
+  } else {
+    throw HttpError(403, `${drink.drink} is not in your favorites.`);
+  }
+
+  res.json({ result });
+};
 
 // const getOwnDrinks = async (req, res) => {
-
-//const removeFavoriteDrink = async (req, res) => {
 
 //addOwnDrink = async (req, res) => {
 
@@ -156,9 +209,9 @@ module.exports = {
   getSearchDrinks: controllerWrapper(getSearchDrinks),
   addFavoriteDrink: controllerWrapper(addFavoriteDrink),
   getPopularDrinks: controllerWrapper(getPopularDrinks),
-  // getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
+  getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
+  removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
   // getOwnDrinks: controllerWrapper(getOwnDrinks),
-  // removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
   // addOwnDrink: controllerWrapper(addOwnDrink),
   // removeOwnDrink: controllerWrapper(removeOwnDrink),
 };
