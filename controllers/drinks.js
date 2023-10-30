@@ -47,7 +47,7 @@ const getMainPageDrinks = async (req, res) => {
     message: 'Success operation',
     totalDrinks: totalCount,
     quantity: drinks.length,
-    data: drinks});
+    mainPageDrinks: drinks});
 };
 
 
@@ -154,7 +154,7 @@ const getFavoriteDrinks = async (req, res) => {
     .skip(skip)
     .limit(limit);
 
-  const totalOwnDrinks = await Drink.countDocuments({
+  const totalFavoriteDrinks = await Drink.countDocuments({
     users: {
       $elemMatch: {
         $eq: userId,
@@ -162,7 +162,7 @@ const getFavoriteDrinks = async (req, res) => {
     },
   });
 
-  res.json({ total: totalOwnDrinks, drinks: result });
+  res.json({ total: totalFavoriteDrinks, drinks: result });
 };
 
 const removeFavoriteDrink = async (req, res) => {
@@ -194,9 +194,9 @@ const removeFavoriteDrink = async (req, res) => {
   res.json({ result });
 };
 
-// const getOwnDrinks = async (req, res) => {
+// const addOwnDrink = async (req, res) =>  {};
 
-//addOwnDrink = async (req, res) => {
+// const getOwnDrinks = async (req, res) => {
 
 // removeOwnDrink = async (req, res) => {
 
