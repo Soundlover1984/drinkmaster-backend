@@ -20,10 +20,8 @@ const getIngredients = async (req, res) => {
   const result = await Ingredient.find(
     {
       alcohol: condition,
-    },
-    { title: 1 }
-  ).sort();
-    // const result = await Ingredient.find().sort({title: 1});
+    }
+  ).sort({ title: 1 });
     if (!result) throw HttpError(404, "Not Found");
     res.json(result);
   };
