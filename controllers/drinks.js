@@ -220,12 +220,16 @@ const addOwnDrink = async (req, res) =>  {
     });
   }
 
-  const drink = await Drink.create({
-    ...req.body,
+  const drinkDB = {...req.body,
     owner,
     drinkThumb,
-    ingredients: ingredientsArr,
-  });
+    ingredients: ingredientsArr,}
+
+  
+  const { error } = schemas.addDrinkSchema.validate(drinkDB);
+  if (error) throw HttpError(400, error.message);
+
+  const drink = await Drink.create(drinkDB);
 
   res.status(201).json(drink);
 };
