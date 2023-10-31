@@ -194,66 +194,22 @@ const removeFavoriteDrink = async (req, res) => {
   res.json({ result });
 };
 
-// const addOwnDrink = async (req, res) =>  {
-//   const { _id: owner } = req.user;
-//   const { ingredients } = req.body;
-//   const parsedIngredients = JSON.parse(ingredients);
-
-//   let drinkThumb = "";
-//   if (req.file) {drinkThumb = req.file.path;}
-
-//   const ingredientsArr = [];
-
-//   for (const ingredient of parsedIngredients) {
-//     const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
-
-//     if (!ingredientInfo) {
-//       throw HttpError(404, "Not Found");
-//     }
-
-//     const { _id: ingredientId, title } = ingredientInfo;
-
-//     ingredientsArr.push({
-//       title,
-//       ...ingredient,
-//       ingredientId,
-//     });
-//   }
-
-//   const drinkDB = {...req.body,
-//     owner,
-//     drinkThumb,
-//     ingredients: ingredientsArr,}
-
-  
-//   const { error } = schemas.addDrinkSchema.validate(drinkDB);
-//   if (error) throw HttpError(400, error.message);
-
-//   const result = await Drink.create(drinkDB);
-
-//   res.status(201).json(result);
-// };
-
-const addOwnDrink = async (req, res) => {
+const addOwnDrink = async (req, res) =>  {
   const { _id: owner } = req.user;
-  let { ingredients } = req.body;
-
-  if (typeof ingredients === 'string') {
-    ingredients = JSON.parse(ingredients);
-  }
+  const { ingredients } = req.body;
+  console.log(req.body);
+  const parsedIngredients = JSON.parse(ingredients);
 
   let drinkThumb = "";
-  if (req.file) {
-    drinkThumb = req.file.path;
-  }
+  if (req.file) {drinkThumb = req.file.path;}
 
   const ingredientsArr = [];
 
-  for (const ingredient of ingredients) {
+  for (const ingredient of parsedIngredients) {
     const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
 
     if (!ingredientInfo) {
-      throw new HttpResponseError(404, "Not Found");
+      throw HttpError(404, "Not Found");
     }
 
     const { _id: ingredientId, title } = ingredientInfo;
@@ -265,24 +221,19 @@ const addOwnDrink = async (req, res) => {
     });
   }
 
-  const drinkDB = {
-    ...req.body,
+  const drinkDB = {...req.body,
     owner,
     drinkThumb,
-    ingredients: ingredientsArr,
-  };
+    ingredients: ingredientsArr,}
 
+  
   const { error } = schemas.addDrinkSchema.validate(drinkDB);
-  if (error) {
-    res.status(400).json({ error: error.message });
-    return;
-  }
+  if (error) throw HttpError(400, error.message);
 
-  const result = await Drink.create(drinkDB);
+  const drink = await Drink.create(drinkDB);
 
-  res.status(201).json(result);
+  res.status(201).json(drink);
 };
-
 
 
 
