@@ -236,10 +236,40 @@ const addOwnDrink = async (req, res) =>  {
 };
 
 
+const getOwnDrinks = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
 
-// const getOwnDrinks = async (req, res) => {
+  const result = await Drink.find({ owner })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
 
-// removeOwnDrink = async (req, res) => {
+  const totalOwnDrinks = await Drink.countDocuments({ owner });
+
+  res.json({ total: totalOwnDrinks, drinks: result });
+};
+
+
+const removeOwnDrink = async (req, res) => {
+  const { id } = req.params;
+  const { _id: currentUser } = req.user;
+
+  const result = await Drink.findById(id);
+
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+
+  if (result.owner.toString() !== currentUser.toString()) {
+    throw HttpError(403, "User is not authorized to delete this drink");
+  }
+
+  const removedDrink = await Drink.findByIdAndRemove(id);
+
+  res.json({ result: removedDrink });
+};
 
 
 
@@ -252,7 +282,7 @@ module.exports = {
   getPopularDrinks: controllerWrapper(getPopularDrinks),
   getFavoriteDrinks: controllerWrapper(getFavoriteDrinks),
   removeFavoriteDrink: controllerWrapper(removeFavoriteDrink),
-  // getOwnDrinks: controllerWrapper(getOwnDrinks),
+  getOwnDrinks: controllerWrapper(getOwnDrinks),
   addOwnDrink: controllerWrapper(addOwnDrink),
-  // removeOwnDrink: controllerWrapper(removeOwnDrink),
+  removeOwnDrink: controllerWrapper(removeOwnDrink),
 };
