@@ -127,6 +127,64 @@
           }
         }
       }
+    },
+    "/api/users/current": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User information",
+        "parameters": [],
+        "requestBody": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/update": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User update",
+        "parameters": [],
+        "requestBody": {
+          "description": "Update object",
+          "required": true,
+          "content": {
+            " multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorisationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
     }
   },
 
@@ -212,7 +270,7 @@
         "example": {
           "name": "example",
           "email": "1example@gmail.com",
-          "birthData": "20 Aug 2010",
+          "birthDate": "20 Aug 2010",
           "isAdult": "true",
           "subscribe": "true",
           "userId": "1573839013698358109",
@@ -255,6 +313,32 @@
         "example": {
           "email": "1example@gmail.com",
           "token": "d113fc3f8c70bc958ff763c03bcc5ebbc563bb313386f922da4a891bf3049624"
+        }
+      },
+      "CurrentResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Test"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test@example.com"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "User's birthDate",
+            "example": "20 Aug 2020"
+          }
+        },
+        "example": {
+          "name": "Test",
+          "email": "1example@gmail.com",
+          "birthDate": "20 Aug 2020"
         }
       }
     },

@@ -35,7 +35,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    refreshToken: String,
+    // refreshToken: String,
   },
   {
     timestamps: true,
@@ -63,4 +63,4 @@ userSchema.pre("save", async function (next) {
 
 const User = model("User", userSchema);
 
-module.exports =  User ;
+module.exports = User;
