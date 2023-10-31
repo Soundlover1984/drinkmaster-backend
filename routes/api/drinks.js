@@ -4,6 +4,7 @@ const ctrl = require("../../controllers/drinks");
 const {
   authenticate, isValidId,
 } = require("../../middlewares");
+const { schemas } = require("../../models/drink");
 
 const { uploadDrinkThumb } = require("../../services/cloudinaryService");
 

@@ -137,6 +137,12 @@ const addDrinkSchema = Joi.object({
     .messages({
       "any.required": "The category field is required",
     }),
+    alcoholic: Joi.string()
+    .valid("Alcoholic", "Non alcoholic")
+    .required()
+    .messages({
+      "any.required": `missing required field 'alcoholic' of recipes`,
+    }),
   glass: Joi.string()
     .valid(
       "Highball glass",
@@ -186,12 +192,11 @@ const addDrinkSchema = Joi.object({
       .messages({ "any.required": "The ingredients field is required" })
   ),
   instructions: Joi.string(),
-  drinkThumb: Joi.string(),
 });
 
 
-// const schemas = {
-//   addDrinkSchema,
-// };
+const schemas = {
+  addDrinkSchema,
+};
 
-module.exports = { Drink , addDrinkSchema };
+module.exports = { Drink, schemas };
