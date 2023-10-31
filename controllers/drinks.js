@@ -226,8 +226,8 @@ const addOwnDrink = async (req, res) =>  {
     ingredients: ingredientsArr,}
 
   
-  const { error } = schemas.addDrinkSchema.validate(drinkDB);
-  if (error) throw HttpError(400, error.message);
+  // const { error } = schemas.addDrinkSchema.validate(drinkDB);
+  // if (error) throw HttpError(400, error.message);
 
   const result = await Drink.create(drinkDB);
 
