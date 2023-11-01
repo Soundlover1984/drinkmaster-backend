@@ -193,47 +193,47 @@ const removeFavoriteDrink = async (req, res) => {
 
   res.json({ result });
 };
-
-const addOwnDrink = async (req, res) =>  {
+const addOwnDrink = async (req, res) => {
   const { _id: owner } = req.user;
   const { ingredients } = req.body;
   console.log(req.body);
-  const parsedIngredients = JSON.parse(ingredients);
 
   let drinkThumb = "";
-  if (req.file) {drinkThumb = req.file.path;}
+  if (req.file) {
+    drinkThumb = req.file.path;
+  }
 
   const ingredientsArr = [];
 
-  for (const ingredient of parsedIngredients) {
-    const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
+  for (const ingredient of ingredients) {
+      const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
 
-    if (!ingredientInfo) {
-      throw HttpError(404, "Not Found");
-    }
+      if (!ingredientInfo) {
+        throw HttpError(404, "Not Found");
+      }
 
-    const { _id: ingredientId, title } = ingredientInfo;
+      const { _id: ingredientId, title } = ingredientInfo;
 
-    ingredientsArr.push({
-      title,
-      ...ingredient,
-      ingredientId,
-    });
+      ingredientsArr.push({
+        title,
+        ...ingredient,
+        ingredientId,
+      });
   }
 
-  const drinkDB = {...req.body,
+  const drinkDB = {
+    ...req.body,
     owner,
     drinkThumb,
-    ingredients: ingredientsArr,}
+    ingredients: ingredientsArr,
+  };
 
-  
-  const { error } = schemas.addDrinkSchema.validate(drinkDB);
-  if (error) throw HttpError(400, error.message);
 
   const drink = await Drink.create(drinkDB);
 
   res.status(201).json(drink);
 };
+
 
 
 const getOwnDrinks = async (req, res) => {
