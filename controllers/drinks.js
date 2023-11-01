@@ -40,13 +40,11 @@ const getMainPageDrinks = async (req, res) => {
         : { category }
     )
       .sort({ createdAt: -1 })
-      .limit(3);
   }
   res.json({
     code: 200,
     message: 'Success operation',
     totalDrinks: totalCount,
-    quantity: drinks.length,
     mainPageDrinks: drinks});
 };
 
