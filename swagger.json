@@ -23,6 +23,14 @@
     {
       "name": "Users",
       "description": "Users endpoints"
+    },
+    {
+      "name": "Filters",
+      "description": "Filter endpoints"
+    },
+    {
+      "name": "Drinks",
+      "description": "Drink endpoints"
     }
   ],
   "paths": {
@@ -183,6 +191,71 @@
             "description": "Unauthorized",
             "content": {}
           }
+        }
+      }
+    }
+  }, "/api/filters/categories": {
+    "get": {
+      "tags": ["Filters"],
+      "summary": "Categories list",
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "200": {
+          "description": "Categories list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriesResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "/api/filters/ingredients": {
+    "get": {
+      "tags": ["Filters"],
+      "summary": "Ingredients list",
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "200": {
+          "description": "Ingredients list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngredientsResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "/api/filters/glasses": {
+    "get": {
+      "tags": ["Filters"],
+      "summary": "Glasses list",
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "200": {
+          "description": "Glasses list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GlassesResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
         }
       }
     }
