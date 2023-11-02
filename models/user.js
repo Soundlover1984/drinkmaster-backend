@@ -35,6 +35,10 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    theme: {
+      type: String,
+      default: "dark",
+    },
     // refreshToken: String,
   },
   {
