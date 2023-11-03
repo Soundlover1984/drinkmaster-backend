@@ -90,7 +90,6 @@ const drinkSchema = new Schema(
       {
         title: String,
         measure: String,
-        quantity: String,
         ingredientId: {
           type: Schema.Types.ObjectId,
           ref: "ingredients",
@@ -183,7 +182,6 @@ const addDrinkSchema = Joi.object({
     }),
   ingredients: Joi.array().items(
     Joi.object({
-      quantity: Joi.string(),
       measure: Joi.string(),
       title: Joi.string(),
     })

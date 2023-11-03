@@ -50,30 +50,34 @@ const getMainPageDrinks = async (req, res) => {
 
 
 const getSearchDrinks = async (req, res) => {
+  const { category, ingredient, query, page = 1, limit = 10 } = req.query;
   const { isAdult } = req.user;
-  const { page = 1, limit = 10 } = req.query;
-  let skip = (page - 1) * limit;
- 
-  const keys = Object.keys(req.query);
-  let paramSearch = {};
-  for (const key of keys) {
-      if (key === 'drink' || key === 'category' || key === 'ingredients.title') {
-          paramSearch = { ...paramSearch, [key]: { $regex: new RegExp(req.query[key], "i") } }
-      };
+  const paramSearch = {};
+
+  const skip = (page - 1) * limit;
+
+  if (category) {
+    paramSearch.category = category;
+  }
+  if (ingredient) {
+    paramSearch.ingredients = { $elemMatch: { title: ingredient } };
+  }
+  if (query) {
+    paramSearch.drink = { $regex: query, $options: "i" };
+  }
+  if (!isAdult) {
+    paramSearch.alcoholic = "Non alcoholic";
   }
 
-  let getByCondition = { ...paramSearch, alcoholic: "Non alcoholic" };
-  if (isAdult) { getByCondition = { ...paramSearch } };
+  const resultCount = await Drink.countDocuments(paramSearch);
 
-  const resultCount = await Drink.find(getByCondition).count();
-  if (skip >= resultCount) { if (resultCount < limit) { skip = 0 } else { skip = resultCount - limit } }
+  const drinks = await Drink.find(paramSearch, { drink: 1, drinkThumb: 1, category: 1, alcoholic: 1, popularity: 1 }, { skip, limit }).sort(
+    { popularity: -1 });
 
-  const drinks = await Drink.find(getByCondition,
-      { drink: 1, drinkThumb: 1, category: 1, alcoholic: 1, populate: 1 }, { skip, limit }).sort({ populate: -1 })
-
-  if (!drinks || !drinks.length) {
-      throw HttpError(404, "Not found, try again");
+  if (!resultCount || !drinks.length) {
+    throw HttpError(404, "Not Found");
   }
+
   res.status(200).json({
       code: 200,
       message: 'Success operation',
@@ -81,6 +85,7 @@ const getSearchDrinks = async (req, res) => {
       data: drinks,
   });
 }
+
 
 const getPopularDrinks = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
