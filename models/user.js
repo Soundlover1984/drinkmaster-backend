@@ -39,6 +39,8 @@ const userSchema = new Schema(
       type: String,
       default: "dark",
     },
+    userAuth: {type: Number, default: 0},
+    userFavorite: {type: Number, default: 0},
     // refreshToken: String,
   },
   {

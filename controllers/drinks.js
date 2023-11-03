@@ -137,6 +137,11 @@ if (isFavorite) {
     { $push: { users: userId } },
     { new: true }
   );
+
+  await User.findByIdAndUpdate(
+    userId,
+    { $inc: { userFavorite: 1 } }
+  );
 }
 res.json({ result });};
 

@@ -10,6 +10,8 @@ exports.createUserDataValidator = (data) =>
       password: Joi.string().min(6).required(),
       email: Joi.string().regex(regex.EMAIL_REGEX).required(),
       isAdult: Joi.boolean(),
+      userAuth: Joi.string(),
+      userFavorite: Joi.string(),
       //   subscription: Joi.string(),
       //   token: Joi.string(),
       //   verificationToken: Joi.string(),

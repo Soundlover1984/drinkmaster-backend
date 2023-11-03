@@ -7,6 +7,8 @@ const crypto = require("crypto");
 
 exports.registerUser = async (userData) => {
   const { email } = userData;
+  const userAuth = 0;
+  const userFavorite = 0;
   const user = await User.findOne({ email });
   if (user) {
     throw HttpError(409, "Email already exist.");
@@ -22,6 +24,8 @@ exports.registerUser = async (userData) => {
   const newUser = await User.create({
     ...userData,
     refreshToken,
+    userAuth,
+    userFavorite
   });
 
   newUser.password = undefined;
@@ -43,7 +47,7 @@ exports.loginUser = async (userData) => {
   user.password = undefined;
 
   const token = signToken(user.id);
-  await User.findByIdAndUpdate(user.id, { token, refreshToken: null });
+  await User.findByIdAndUpdate(user.id, { token, refreshToken: null, $inc: { userAuth: 1 } } );
 
   return { user, token };
 };
