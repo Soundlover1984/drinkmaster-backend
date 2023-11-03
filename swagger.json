@@ -260,6 +260,169 @@
       }
     }
   },
+  "/api/drinks/mainpage": {
+    "get": {
+      "tags": ["Drinks"],
+      "summary": "Gets drinks sorted by categories",
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "201": {
+          "description": "Successful response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MainpageResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "/api/drinks/popular": {
+    "get": {
+      "tags": ["Drinks"],
+      "summary": "Gets popular drinks",
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "200": {
+          "description": "Success response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PopularDrinksResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not found"
+        }
+      }
+    }
+  },
+  "/api/drinks/search": {
+    "get": {
+      "tags": ["Drinks"],
+      "summary": "Search Drinks",
+      "security": [{ "Bearer": [] }],
+      "description": "Enables drink search based on a variety of criteria",
+      "parameters": [
+        {
+          "name": "ingredient",
+          "in": "query",
+          "description": "Title of ingridient, that used in the drink",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "drink",
+          "in": "query",
+          "description": "Query for drink names in the search",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "in": "query",
+          "description": "Drink category",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "Ordinary Drink",
+              "Cocktail",
+              "Shake",
+              "Other/Unknown",
+              "Cocoa",
+              "Shot",
+              "Coffee / Tea",
+              "Homemade Liqueur",
+              "Punch / Party Drink",
+              "Beer",
+              "Soft Drink"
+            ]
+          }
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "description": "Page number of results",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "Number of results per page",
+          "required": false,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDrinksResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not found"
+        }
+      }
+    }
+  },
+  "/api/drinks/{id}": {
+    "get": {
+      "tags": ["Drinks"],
+      "summary": "Get drink by id",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "objectId",
+            "description": "Drink id"
+          },
+          "description": "Drink id"
+        }
+      ],
+      "security": [{ "Bearer": [] }],
+      "responses": {
+        "200": {
+          "description": "Success response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrinkByIdResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not found"
+        }
+      }
+    }
+  },
 
   "components": {
     "schemas": {
