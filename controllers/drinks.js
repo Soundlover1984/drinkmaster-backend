@@ -79,10 +79,10 @@ const getSearchDrinks = async (req, res) => {
   }
 
   res.status(200).json({
-      code: 200,
-      message: 'Success operation',
-      quantityTotal: resultCount,
-      data: drinks,
+    code: 200,
+    message: 'Success operation',
+    quantityTotal: resultCount,
+    data: drinks,
   });
 }
 
@@ -107,7 +107,7 @@ const getPopularDrinks = async (req, res) => {
       },
     },
     {
-      $sort: { popularity: -1 }, 
+      $sort: { popularity: -1 },
     },
   ]).match({ alcoholic: condition })
     .skip(skip)
@@ -118,32 +118,32 @@ const getPopularDrinks = async (req, res) => {
 
 
 const addFavoriteDrink = async (req, res) => {
-const { id } = req.params;
-const { _id: userId } = req.user;
-const drink = await Drink.findById(id);
-if (!drink) {
-  throw HttpError(404, "Not Found");
-}
-if (!drink.users) {
-  drink.users = [];
-}
-const isFavorite = drink.users.includes(userId);
-let result;
-if (isFavorite) {
-  throw HttpError(409, `${drink.drink} is already in your favorites.`);
-} else {
-  result = await Drink.findByIdAndUpdate(
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+  const drink = await Drink.findById(id);
+  if (!drink) {
+    throw HttpError(404, "Not Found");
+  }
+  if (!drink.users) {
+    drink.users = [];
+  }
+  const isFavorite = drink.users.includes(userId);
+  let result;
+  if (isFavorite) {
+    throw HttpError(409, `${drink.drink} is already in your favorites.`);
+  } else {
+    result = await Drink.findByIdAndUpdate(
     drink._id,
     { $push: { users: userId } },
     { new: true }
   );
 
-  await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
     userId,
     { $inc: { userFavorite: 1 } }
   );
-}
-res.json({ result });};
+  }
+  res.json({ result });};
 
 
 
@@ -203,7 +203,7 @@ const removeFavoriteDrink = async (req, res) => {
 };
 const addOwnDrink = async (req, res) => {
   const { _id: owner } = req.user;
-  const { ingredients } = req.body;
+  const ingredients = JSON.parse(req.body.ingredients);
   console.log(req.body);
 
   let drinkThumb = "";
@@ -214,19 +214,19 @@ const addOwnDrink = async (req, res) => {
   const ingredientsArr = [];
 
   for (const ingredient of ingredients) {
-      const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
+    const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
 
-      if (!ingredientInfo) {
-        throw HttpError(404, "Not Found");
-      }
+    if (!ingredientInfo) {
+      throw HttpError(404, "Not Found");
+    }
 
-      const { _id: ingredientId, title } = ingredientInfo;
+    const { _id: ingredientId, title } = ingredientInfo;
 
-      ingredientsArr.push({
-        title,
-        ...ingredient,
-        ingredientId,
-      });
+    ingredientsArr.push({
+      title,
+      ...ingredient,
+      ingredientId,
+    });
   }
 
   const drinkDB = {
