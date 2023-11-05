@@ -282,6 +282,7 @@
             "description": "Unauthorized"
           }
         }
+      }
       },
       "/api/drinks/popular": {
         "get": {
@@ -424,7 +425,6 @@
           }
         }
       }
-    }
   },
 
   "components": {
