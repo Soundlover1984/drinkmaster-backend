@@ -201,9 +201,53 @@ const removeFavoriteDrink = async (req, res) => {
 
   res.json({ result });
 };
+
+
+// const addOwnDrink = async (req, res) => {
+//   const { _id: owner } = req.user;
+//   const { ingredients } = req.body;
+//   console.log(req.body);
+
+//   let drinkThumb = "";
+//   if (req.file) {
+//     drinkThumb = req.file.path;
+//   }
+
+//   const ingredientsArr = [];
+
+//   for (const ingredient of ingredients) {
+//       const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
+
+//       if (!ingredientInfo) {
+//         throw HttpError(404, "Not Found");
+//       }
+
+//       const { _id: ingredientId, title } = ingredientInfo;
+
+//       ingredientsArr.push({
+//         title,
+//         ...ingredient,
+//         ingredientId,
+//       });
+//   }
+
+//   const drinkDB = {
+//     ...req.body,
+//     owner,
+//     drinkThumb,
+//     ingredients: ingredientsArr,
+//   };
+
+
+//   const drink = await Drink.create(drinkDB);
+
+//   res.status(201).json(drink);
+// };
+
+
 const addOwnDrink = async (req, res) => {
   const { _id: owner } = req.user;
-  const { ingredients } = req.body;
+  const ingredients = JSON.parse(req.body.ingredients);
   console.log(req.body);
 
   let drinkThumb = "";
@@ -214,19 +258,19 @@ const addOwnDrink = async (req, res) => {
   const ingredientsArr = [];
 
   for (const ingredient of ingredients) {
-      const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
+    const ingredientInfo = await Ingredient.findById(ingredient.ingredientId);
 
-      if (!ingredientInfo) {
-        throw HttpError(404, "Not Found");
-      }
+    if (!ingredientInfo) {
+      throw HttpError(404, "Not Found");
+    }
 
-      const { _id: ingredientId, title } = ingredientInfo;
+    const { _id: ingredientId, title } = ingredientInfo;
 
-      ingredientsArr.push({
-        title,
-        ...ingredient,
-        ingredientId,
-      });
+    ingredientsArr.push({
+      title,
+      ...ingredient,
+      ingredientId,
+    });
   }
 
   const drinkDB = {
@@ -241,6 +285,7 @@ const addOwnDrink = async (req, res) => {
 
   res.status(201).json(drink);
 };
+
 
 
 
