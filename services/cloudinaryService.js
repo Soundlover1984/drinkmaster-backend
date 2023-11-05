@@ -14,16 +14,16 @@ const storage = new CloudinaryStorage({
     // Determine the folder based on file properties or request data
     let folder;
     if (file.fieldname === "avatar") {
-      folder = "public/avatar";
+      folder = "drinkMaster/avatar";
     } else if (file.fieldname === "drinkThumb") {
-      folder = "drink";
+      folder = "drinkMaster/drink";
     } else {
       folder = "others";
     }
     return {
       folder: folder,
       allowed_formats: ["jpg", "png"], // Adjust the allowed formats as needed
-      public_id: file.originalname,
+      public_id: file.fieldname === "avatar" ? req.user.id : file.originalname,
       transformation: [
         { width: 350, height: 350 },
         { width: 700, height: 700 },
@@ -32,5 +32,5 @@ const storage = new CloudinaryStorage({
   },
 });
 
-exports.uploadAvatar = multer({ storage }).single("avatar")
-exports.uploadDrinkThumb = multer({ storage }).single("drinkThumb")
+exports.uploadAvatar = multer({ storage }).single("avatar");
+exports.uploadDrinkThumb = multer({ storage }).single("drinkThumb");

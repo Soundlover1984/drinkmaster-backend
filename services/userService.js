@@ -25,7 +25,7 @@ exports.registerUser = async (userData) => {
     ...userData,
     refreshToken,
     userAuth,
-    userFavorite
+    userFavorite,
   });
 
   newUser.password = undefined;
@@ -47,7 +47,11 @@ exports.loginUser = async (userData) => {
   user.password = undefined;
 
   const token = signToken(user.id);
-  await User.findByIdAndUpdate(user.id, { token, refreshToken: null, $inc: { userAuth: 1 } } );
+  await User.findByIdAndUpdate(user.id, {
+    token,
+    refreshToken: null,
+    $inc: { userAuth: 1 },
+  });
 
   return { user, token };
 };
@@ -77,7 +81,7 @@ exports.subscribeUser = async (userData) => {
   if (!user) HttpError(404);
 
   try {
-    await new Email(user, "").sendHello();
+    await new Email(user, "DrinkMaster@gmail.com").sendHello();
   } catch (error) {
     HttpError(404);
   }
