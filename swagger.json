@@ -140,6 +140,7 @@
       "post": {
         "tags": ["Users"],
         "summary": "User information",
+        "security": [{ "Bearer": [] }],
         "parameters": [],
         "requestBody": [],
         "responses": {
@@ -164,6 +165,7 @@
       "post": {
         "tags": ["Users"],
         "summary": "User update",
+        "security": [{ "Bearer": [] }],
         "parameters": [],
         "requestBody": {
           "description": "Update object",
@@ -171,7 +173,7 @@
           "content": {
             " multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorisationRequest"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               }
             }
           }
@@ -182,7 +184,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CurrentResponse"
+                  "$ref": "#/components/schemas/UpdateUserRespons"
                 }
               }
             }
@@ -193,232 +195,233 @@
           }
         }
       }
-    }
-  }, "/api/filters/categories": {
-    "get": {
-      "tags": ["Filters"],
-      "summary": "Categories list",
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "200": {
-          "description": "Categories list",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CategoriesResponse"
+    },
+    "/api/filters/categories": {
+      "get": {
+        "tags": ["Filters"],
+        "summary": "Categories list",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Categories list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesResponse"
+                }
               }
             }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        }
-      }
-    }
-  },
-  "/api/filters/ingredients": {
-    "get": {
-      "tags": ["Filters"],
-      "summary": "Ingredients list",
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "200": {
-          "description": "Ingredients list",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IngredientsResponse"
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        }
-      }
-    }
-  },
-  "/api/filters/glasses": {
-    "get": {
-      "tags": ["Filters"],
-      "summary": "Glasses list",
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "200": {
-          "description": "Glasses list",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GlassesResponse"
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        }
-      }
-    }
-  },
-  "/api/drinks/mainpage": {
-    "get": {
-      "tags": ["Drinks"],
-      "summary": "Gets drinks sorted by categories",
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "201": {
-          "description": "Successful response",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MainpageResponse"
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        }
-      }
-    }
-  },
-  "/api/drinks/popular": {
-    "get": {
-      "tags": ["Drinks"],
-      "summary": "Gets popular drinks",
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "200": {
-          "description": "Success response",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PopularDrinksResponse"
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        },
-        "404": {
-          "description": "Not found"
-        }
-      }
-    }
-  },
-  "/api/drinks/search": {
-    "get": {
-      "tags": ["Drinks"],
-      "summary": "Search Drinks",
-      "security": [{ "Bearer": [] }],
-      "description": "Enables drink search based on a variety of criteria",
-      "parameters": [
-        {
-          "name": "ingredient",
-          "in": "query",
-          "description": "Title of ingridient, that used in the drink",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "name": "drink",
-          "in": "query",
-          "description": "Query for drink names in the search",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "name": "category",
-          "in": "query",
-          "description": "Drink category",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": [
-              "Ordinary Drink",
-              "Cocktail",
-              "Shake",
-              "Other/Unknown",
-              "Cocoa",
-              "Shot",
-              "Coffee / Tea",
-              "Homemade Liqueur",
-              "Punch / Party Drink",
-              "Beer",
-              "Soft Drink"
-            ]
-          }
-        },
-        {
-          "name": "page",
-          "in": "query",
-          "description": "Page number of results",
-          "required": false,
-          "type": "integer"
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "description": "Number of results per page",
-          "required": false,
-          "type": "integer"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successful request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchDrinksResponse"
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Unauthorized"
-        },
-        "404": {
-          "description": "Not found"
-        }
-      }
-    }
-  },
-  "/api/drinks/{id}": {
-    "get": {
-      "tags": ["Drinks"],
-      "summary": "Get drink by id",
-      "parameters": [
-        {
-          "in": "path",
-          "name": "id",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "objectId",
-            "description": "Drink id"
           },
-          "description": "Drink id"
+          "401": {
+            "description": "Unauthorized"
+          }
         }
-      ],
-      "security": [{ "Bearer": [] }],
-      "responses": {
-        "200": {
-          "description": "Success response",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DrinkByIdResponse"
+      }
+    },
+    "/api/filters/ingredients": {
+      "get": {
+        "tags": ["Filters"],
+        "summary": "Ingredients list",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Ingredients list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngredientsResponse"
+                }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        },
-        "401": {
-          "description": "Unauthorized"
-        },
-        "404": {
-          "description": "Not found"
+        }
+      }
+    },
+    "/api/filters/glasses": {
+      "get": {
+        "tags": ["Filters"],
+        "summary": "Glasses list",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Glasses list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GlassesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/drinks/mainpage": {
+      "get": {
+        "tags": ["Drinks"],
+        "summary": "Gets drinks sorted by categories",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MainpageResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "/api/drinks/popular": {
+        "get": {
+          "tags": ["Drinks"],
+          "summary": "Gets popular drinks",
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Success response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PopularDrinksResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/drinks/search": {
+        "get": {
+          "tags": ["Drinks"],
+          "summary": "Search Drinks",
+          "security": [{ "Bearer": [] }],
+          "description": "Enables drink search based on a variety of criteria",
+          "parameters": [
+            {
+              "name": "ingredient",
+              "in": "query",
+              "description": "Title of ingridient, that used in the drink",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "drink",
+              "in": "query",
+              "description": "Query for drink names in the search",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "description": "Drink category",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "Ordinary Drink",
+                  "Cocktail",
+                  "Shake",
+                  "Other/Unknown",
+                  "Cocoa",
+                  "Shot",
+                  "Coffee / Tea",
+                  "Homemade Liqueur",
+                  "Punch / Party Drink",
+                  "Beer",
+                  "Soft Drink"
+                ]
+              }
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Page number of results",
+              "required": false,
+              "type": "integer"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "Number of results per page",
+              "required": false,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SearchDrinksResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/drinks/{id}": {
+        "get": {
+          "tags": ["Drinks"],
+          "summary": "Get drink by id",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "objectId",
+                "description": "Drink id"
+              },
+              "description": "Drink id"
+            }
+          ],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Success response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DrinkByIdResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
         }
       }
     }
@@ -576,7 +579,28 @@
           "email": "1example@gmail.com",
           "birthDate": "20 Aug 2020"
         }
-      }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "filename": {
+            "type": "array",
+            "items": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Test"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "User's avatar",
+                "format": "binary"
+              }
+            }
+          }
+        }
+      },
+      "UpdateUserRespons": {}
     },
     "securitySchemes": {
       "Bearer": {
