@@ -524,7 +524,7 @@
       "/api/drinks/favorite": {
         "get": {
           "tags": ["Drinks"],
-          "summary": "Get drinks from user's favorites",
+          "summary": "Get drinks from favorites",
           "parameters": [
             {
               "in": "query",
@@ -545,6 +545,80 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/AllFavoritesResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },"/api/drinks/favorite/add/{id}": {
+        "post": {
+          "tags": ["Drinks"],
+          "summary": "Add drink to favorites",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "objectId",
+                "description": "Drink id"
+              },
+              "description": "Drink id"
+            }
+          ],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddToFavoritesResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },"/api/drinks/favorite/remove/{id}": {
+        "delete": {
+          "tags": ["Drinks"],
+          "summary": "Remove drink from favorites",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "objectId",
+                "description": "Drink id"
+              },
+              "description": "Drink id"
+            }
+          ],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DeleteFromFavoritesResponse"
                   }
                 }
               }
