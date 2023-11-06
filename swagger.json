@@ -1064,7 +1064,8 @@
             "flavour": {
               "type": "string",
               "description": "Ingredient's flavour"
-            },"country": {
+            },
+            "country": {
               "type": "string",
               "description": "Ingredient's origin country"
             }
@@ -1085,6 +1086,13 @@
         "country": "Italy"
           }
         ]
+      },
+      "GlassesResponse": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": ["Coffee mug", "Cocktail glass", "Cordial glass"]
       }
     },
     "securitySchemes": {
