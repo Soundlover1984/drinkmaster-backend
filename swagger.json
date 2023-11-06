@@ -1093,6 +1093,365 @@
           "type": "string"
         },
         "example": ["Coffee mug", "Cocktail glass", "Cordial glass"]
+      },
+      "MainpageResponse": {
+        "type": "object",
+        "properties": {
+          "Ordinary Drink": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "drink": {
+                  "type": "string"
+                },
+                "drinkAlternate": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "string"
+                },
+                "video": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "IBA": {
+                  "type": "string"
+                },
+                "alcoholic": {
+                  "type": "string"
+                },
+                "glass": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "instructionsES": {
+                  "type": "string"
+                },
+                "instructionsDE": {
+                  "type": "string"
+                },
+                "instructionsFR": {
+                  "type": "string"
+                },
+                "instructionsIT": {
+                  "type": "string"
+                },
+                "instructionsRU": {
+                  "type": "string"
+                },
+                "instructionsPL": {
+                  "type": "string"
+                },
+                "instructionsUK": {
+                  "type": "string"
+                },
+                "drinkThumb": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "measure": {
+                        "type": "string"
+                      },
+                      "ingredientId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "shortDescription": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "Ordinary Drink": [
+            {
+              "_id": "639b6de9ff77d221f190c56d",
+              "drink": "Daiquiri",
+              "drinkAlternate": "Sorry, not specified",
+              "tags": "IBA,Classic,Beach",
+              "video": "Sorry, not specified",
+              "category": "Ordinary Drink",
+              "IBA": "Sorry, not specified",
+              "alcoholic": "Alcoholic",
+              "glass": "Cocktail glass",
+              "description": "Daiquiri is a classic and refreshing cocktail that has stood the test of time. It is made with rum, lime juice, and simple syrup. The combination of tart lime juice, smooth rum, and a touch of sweetness creates a well-balanced and delightful drink. Whether you prefer it shaken or frozen, the Daiquiri is a versatile and timeless choice for any occasion.",
+              "instructions": "Pour all ingredients into shaker with ice cubes. Shake well. Strain in chilled cocktail glass.",
+              "instructionsES": "Vierta todos los ingredientes en la coctelera con cubitos de hielo. Agite bien. Colar en copa de cóctel fría.",
+              "instructionsDE": "Alle Zutaten in den Shaker mit Eiswürfel geben. Gut schütteln. In einem gekühlten Cocktailglas abseihen.",
+              "instructionsFR": "Verser tous les ingrédients dans un shaker avec des glaçons. Bien agiter. Filtrer dans un verre à cocktail refroidi.",
+              "instructionsIT": "Versare tutti gli ingredienti nello shaker con cubetti di ghiaccio.Filtrare in una coppetta da cocktail ghiacciata. Agitare bene",
+              "instructionsRU": "Налейте все ингредиенты в шейкер с кубиками льда. Хорошо встряхнуть. Процедить в охлажденный коктейльный бокал.",
+              "instructionsPL": "Wszystkie składniki wlej do shakera z kostkami lodu. Dobrze wstrząsnąć. Odcedź w schłodzonym kieliszku koktajlowym.",
+              "instructionsUK": "Перелийте всі інгредієнти в шейкер з кубиками льоду. Добре струсити. Процідити в охолоджений коктейльний келих.",
+              "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Daiquiri.jpg",
+              "ingredients": [
+                  {
+                      "_id": "65493f119ee3f7ef42ffc488",
+                      "title": "Light rum",
+                      "measure": "1 1/2 oz ",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4a4"
+                  },
+                  {
+                      "_id": "65493f119ee3f7ef42ffc489",
+                      "title": "Lime",
+                      "measure": "Juice of 1/2 ",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4db"
+                  },
+                  {
+                      "_id": "65493f119ee3f7ef42ffc48a",
+                      "title": "Powdered sugar",
+                      "measure": "1 tsp ",
+                      "ingredientId": "64f1d5c369d8333cf130fb78"
+                  }
+              ],
+              "shortDescription": "A classic and refreshing cocktail with rum, lime juice, and simple syrup.",
+              "updatedAt": "2023-11-06T19:14:04.870Z",
+              "users": [
+                  "6548f92d7344e11d1d129d8a",
+                  "6548e4b97344e11d1d1181ea"
+              ]
+          }
+          ]
+        }
+      },
+      "PopularDrinksResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "drink": {
+              "type": "string"
+            },
+            "drinkAlternate": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "string"
+            },
+            "video": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "IBA": {
+              "type": "string"
+            },
+            "alcoholic": {
+              "type": "string"
+            },
+            "glass": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "instructions": {
+              "type": "string"
+            },
+            "instructionsES": {
+              "type": "string"
+            },
+            "instructionsDE": {
+              "type": "string"
+            },
+            "instructionsFR": {
+              "type": "string"
+            },
+            "instructionsIT": {
+              "type": "string"
+            },
+            "instructionsRU": {
+              "type": "string"
+            },
+            "instructionsPL": {
+              "type": "string"
+            },
+            "instructionsUK": {
+              "type": "string"
+            },
+            "drinkThumb": {
+              "type": "string"
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "measure": {
+                    "type": "string"
+                  },
+                  "ingredientId": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "shortDescription": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "users": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "example": [
+          {
+        "_id": "639b6de9ff77d221f190c50f",
+        "drink": "Quentin",
+        "drinkAlternate": "Sorry, not specified",
+        "tags": "IBA,ContemporaryClassic",
+        "video": "https://www.youtube.com/watch?v=2jtoa_t7g94",
+        "category": "Ordinary Drink",
+        "IBA": "Contemporary Classics",
+        "alcoholic": "Alcoholic",
+        "glass": "Cocktail glass",
+        "description": "Quentin is a refreshing cocktail that combines the flavors of citrus and mint. It is made with fresh lime juice, orange liqueur, and a touch of mint syrup. The drink is served over ice and garnished with a sprig of mint. It is the perfect beverage for a hot summer day.",
+        "instructions": "In a shaker half-filled with ice cubes, combine the rum, Kahlua, and cream. Shake well. Strain into a cocktail glass and garnish with the nutmeg.",
+        "instructionsES": "En una coctelera llena hasta la mitad con cubitos de hielo, combine el ron, Kahlua y la crema. Agite bien. Colar en una copa de cóctel y decorar con la nuez moscada.",
+        "instructionsDE": "In einem Shaker, der halb mit Eiswürfeln gefüllt ist, Rum, Kahlua und Sahne mischen. Gut schütteln. In ein Cocktailglas abseihen und mit der Muskatnuss garnieren.",
+        "instructionsFR": "Dans un shaker à moitié rempli de glaçons, mélanger le rhum, le Kahlua et la crème. Bien agiter. Versez dans un verre à cocktail et décorez avec la noix de muscade.",
+        "instructionsIT": "In uno shaker riempito a metà con cubetti di ghiaccio, unire il rum, il Kahlua e la panna. Filtrare in una coppetta da cocktail e guarnire con la noce moscata. Agitare bene.",
+        "instructionsRU": "В шейкере, наполовину наполненном кубиками льда, смешайте ром, Калуа и сливки. Хорошо встряхнуть. Процедите в коктейльный бокал и украсьте мускатным орехом.",
+        "instructionsPL": "W shakerze wypełnionym do połowy kostkami lodu wymieszać rum, Kahlua i śmietanę. Dobrze wstrząsnąć. Przelej do kieliszka koktajlowego i udekoruj gałką muszkatołową.",
+        "instructionsUK": "У шейкері, наповненому наполовину кубиками льоду, змішайте ром, Калуа та вершки. Добре струсити. Процідіть у келих для коктейлю та прикрасьте мускатним горіхом.",
+        "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Quentin.jpg",
+        "ingredients": [
+            {
+                "title": "Dark rum",
+                "measure": "1 1/2 oz ",
+                "ingredientId": "64aebb7f82d96cc69e0eb4a7"
+            },
+            {
+                "title": "Kahlua",
+                "measure": "1/2 oz ",
+                "ingredientId": "64aebb7f82d96cc69e0eb4bd"
+            },
+            {
+                "title": "Light cream",
+                "measure": "1 oz ",
+                "ingredientId": "64f1d5c069d8333cf130fb31"
+            },
+            {
+                "title": "Nutmeg",
+                "measure": "1/8 tsp grated ",
+                "ingredientId": "64f1d5c069d8333cf130fb34"
+            }
+        ],
+        "shortDescription": "A refreshing and citrusy cocktail with a hint of mint.",
+        "updatedAt": "2023-11-03T20:57:13.653Z",
+        "users": [
+            "653e747a0d2bb3830f82eb47",
+            "6543e1144b22e0e1b4948877",
+            "6540c1977366a77795807a1a"
+        ],
+        "popularity": 3
+    }
+        ]
+      },
+      "SearchDrinksResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Response code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "quantityTotal": {
+            "type": "integer",
+            "description": "Total number of drinks found"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Drink ID"
+                },
+                "drink": {
+                  "type": "string",
+                  "description": "Name of the drink"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category of the drink"
+                },
+                "alcoholic": {
+                  "type": "string",
+                  "description": "Alcoholic content of the drink"
+                },
+                "drinkThumb": {
+                  "type": "string",
+                  "description": "URL of the drink's image"
+                } 
+              }
+            }
+          }
+        },
+        "example": {
+          "code": 200,
+          "message": "Success operation",
+          "quantityTotal": 1,
+          "data": [
+              {
+                  "_id": "639b6de9ff77d221f190c55a",
+                  "drink": "Jam Donut",
+                  "category": "Shot",
+                  "alcoholic": "Alcoholic",
+                  "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Jam_Donut.jpg"
+              }
+          ]
+      }
       }
     },
     "securitySchemes": {
