@@ -180,14 +180,14 @@ const addDrinkSchema = Joi.object({
     .messages({
       "any.required": "The glass field is required",
     }),
-  ingredients: Joi.array().items(
-    Joi.object({
-      measure: Joi.string(),
-      title: Joi.string(),
-    })
-      .required()
-      .messages({ "any.required": "The ingredients field is required" })
-  ),
+  // ingredients: Joi.array().items(
+  //   Joi.object({
+  //     measure: Joi.string(),
+  //     title: Joi.string(),
+  //   })
+  //     .required()
+  //     .messages({ "any.required": "The ingredients field is required" })
+  // ),
   instructions: Joi.string(),
 });
 
