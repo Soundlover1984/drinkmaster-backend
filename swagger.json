@@ -632,6 +632,212 @@
           }
         }
       }
+    }, "/api/drinks/own/add": {
+      "post": {
+        "tags": ["Drinks"],
+        "summary": "Add user's recipe of drink",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's recipe object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOwnDrinkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Drink successfully added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddOwnDrinkResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/drinks/own": {
+      "get": {
+        "tags": ["Drinks"],
+        "summary": "Get user's own drinks",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of page. Default page = 1"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of drinks on one page. Default limit = 10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllOwnDrinksResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/drinks/own/remove/{id}": {
+      "delete": {
+        "tags": ["Drinks"],
+        "summary": "Delete user's own drink",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Drink id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Drink successfully removed"
+          },
+          "403": {
+            "description": "User is not authorized to delete this drink"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/drinks/favorite": {
+      "get": {
+        "tags": ["Drinks"],
+        "summary": "Get drinks from favorites",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of page. Default page = 1"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of cocktails on one page. Default limit = 10"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllFavoritesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },"/api/drinks/favorite/add/{id}": {
+      "post": {
+        "tags": ["Drinks"],
+        "summary": "Add drink to favorites",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectId",
+              "description": "Drink id"
+            },
+            "description": "Drink id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddToFavoritesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },"/api/drinks/favorite/remove/{id}": {
+      "delete": {
+        "tags": ["Drinks"],
+        "summary": "Remove drink from favorites",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectId",
+              "description": "Drink id"
+            },
+            "description": "Drink id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteFromFavoritesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
     }
   },
 
@@ -804,7 +1010,82 @@
           }
         }
       },
-      "UpdateUserRespons": {}
+      "UpdateUserRespons": {},
+      "CategoriesResponse": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": ["Beer", "Shot", "Shake"]
+      }, "IngredientsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Ingredient id"
+            },
+            "title": {
+              "type": "string",
+              "description": "Ingredient title"
+            },
+            "ingredientThumb": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to ingredient image"
+            },
+            "thumb-medium": {
+              "type": "string",
+              "format": "uri",
+              "description": "Ingredient medium image URL"
+            },
+            "thumb-small": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to ingredient small image"
+            },
+            "abv": {
+              "type": "string",
+              "description": "Ingredient's abv"
+            },
+            "alcocol": {
+              "type": "string",
+              "description": "Ingredient's alcohol"
+            },
+            "description": {
+              "type": "string",
+              "description": "Ingredient's description"
+            },
+            "type": {
+              "type": "string",
+              "description": "Ingredient's type"
+            },
+            "flavour": {
+              "type": "string",
+              "description": "Ingredient's flavour"
+            },"country": {
+              "type": "string",
+              "description": "Ingredient's origin country"
+            }
+          }
+        },
+        "example": [
+          {
+        "_id": "64aebb7f82d96cc69e0eb4b3",
+        "title": "Amaretto",
+        "ingredientThumb": "https://ftp.goit.study/img/drinkify/ingredients/Amaretto.png",
+        "thumb-medium": "https://ftp.goit.study/img/drinkify/ingredients/Amaretto-Medium.png",
+        "thumb-small": "https://ftp.goit.study/img/drinkify/ingredients/Amaretto-Small.png",
+        "abv": "28",
+        "alcohol": "Yes",
+        "description": "Amaretto (Italian for \"a little bitter\") is a sweet, almond-flavoured, Italian liqueur associated with Saronno, Italy. Various commercial brands are made from a base of apricot pits, almonds, or both.\r\n\r\nWhen served as a beverage, amaretto can be drunk by itself, used as an ingredient to create several popular mixed drinks, or added to coffee. Amaretto is also commonly used in culinary applications.\r\n\r\nThe name amaretto originated as a diminutive of the Italian word amaro, meaning \"bitter\", which references the distinctive flavour lent by the mandorla amara (the bitter almond) or by the drupe kernel. However, the bitterness of amaretto tends to be mild, and sweeteners—and sometimes sweet almonds—enhance the flavour in the final products. Thus one can interpret the liqueur's name as a description of the taste as \"a little bitter\". Cyanide is processed out of the almond preparation prior to its use.\r\n\r\nConflation of amaro (\"bitter\") and amore (\"love\") has led to associations with romance.\r\n\r\nOne should not confuse amaretto with amaro, a different family of Italian liqueurs that, while also sweetened, have a stronger bitter flavour derived from herbs.",
+        "type": "Liqueur",
+        "flavour": "almond",
+        "country": "Italy"
+          }
+        ]
+      }
     },
     "securitySchemes": {
       "Bearer": {
