@@ -1452,6 +1452,392 @@
               }
           ]
       }
+      },
+      "DrinkByIdResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Drink ID"
+          },
+          "drink": {
+            "type": "string",
+            "description": "Name of the drink"
+          },
+          "drinkAlternate": {
+            "type": "string",
+            "description": "Alternate name for the drink"
+          },
+          "tags": {
+            "type": "string",
+            "description": "Tags for the drink"
+          },
+          "video": {
+            "type": "string",
+            "description": "URL of the drink's video"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the drink"
+          },
+          "IBA": {
+            "type": "string",
+            "description": "International Bartenders Association (IBA) category"
+          },
+          "alcoholic": {
+            "type": "string",
+            "description": "Alcoholic volume of the drink"
+          },
+          "glass": {
+            "type": "string",
+            "description": "Type of glass for the drink"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the drink"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instructions for making the drink (in English)"
+          },
+          "instructionsES": {
+            "type": "string",
+            "description": "Instructions for making the drink (in Spanish)"
+          },
+          "instructionsDE": {
+            "type": "string",
+            "description": "Instructions for making the drink (in German)"
+          },
+          "instructionsFR": {
+            "type": "string",
+            "description": "Instructions for making the drink (in French)"
+          },
+          "instructionsIT": {
+            "type": "string",
+            "description": "Instructions for making the drink (in Italian)"
+          },
+          "instructionsRU": {
+            "type": "string",
+            "description": "Instructions for making the drink (in Russian)"
+          },
+          "instructionsPL": {
+            "type": "string",
+            "description": "Instructions for making the drink (in Polish)"
+          },
+          "instructionsUK": {
+            "type": "string",
+            "description": "Instructions for making the drink (in Ukrainian)"
+          },
+          "drinkThumb": {
+            "type": "string",
+            "description": "URL of the drink's image"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Unique identifier for the ingredient"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Name of the ingredient"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Measurement quantity of the ingredient"
+                },
+                "ingredientId": {
+                  "type": "string",
+                  "description": "Unique identifier for the ingredient in the database"
+                }
+              }
+            }
+          },
+          "shortDescription": {
+            "type": "string",
+            "description": "Short drink description"
+          }
+        },
+        "example": {
+          "users": [],
+          "_id": "639b6de9ff77d221f190c502",
+          "drink": "Yellow Bird",
+          "drinkAlternate": "Sorry, not specified",
+          "tags": "IBA,NewEra",
+          "video": "Sorry, not specified",
+          "category": "Cocktail",
+          "IBA": "New Era Drinks",
+          "alcoholic": "Alcoholic",
+          "glass": "Cocktail glass",
+          "description": "Yellow Bird is a tropical and fruity cocktail that captures the essence of a sunny paradise. It features the flavors of rum, Galliano liqueur, lime juice, and pineapple juice. This vibrant and refreshing drink is perfect for sipping by the pool or enjoying on a beach vacation. Treat yourself to a Yellow Bird and let its tropical flavors transport you to an island getaway.",
+          "instructions": "Shake and strain into a chilled cocktail glass",
+          "instructionsES": "Agitar y colar en una copa de cóctel fría",
+          "instructionsDE": "In ein gekühltes Cocktailglas schütteln und abseihen.",
+          "instructionsFR": "Secouer et filtrer dans un verre à cocktail refroidi",
+          "instructionsIT": "Shakerare e filtrare in una coppetta da cocktail ghiacciata",
+          "instructionsRU": "Встряхнуть и процедить в охлажденный коктейльный бокал",
+          "instructionsPL": "Wstrząśnij i przelej do schłodzonego kieliszka koktajlowego",
+          "instructionsUK": "Струсіть і процідіть у охолоджений келих для коктейлю",
+          "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Yellow_Bird.jpg",
+          "ingredients": [
+              {
+                  "_id": "654957fc8609e9d50ebca80c",
+                  "title": "White Rum",
+                  "measure": "3 cl",
+                  "ingredientId": "64f1d5cf69d8333cf130fc52"
+              },
+              {
+                  "_id": "654957fc8609e9d50ebca80d",
+                  "title": "Galliano",
+                  "measure": "1.5 cl",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4e4"
+              },
+              {
+                  "_id": "654957fc8609e9d50ebca80e",
+                  "title": "Triple Sec",
+                  "measure": "1.5 cl",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4ac"
+              },
+              {
+                  "_id": "654957fc8609e9d50ebca80f",
+                  "title": "Lime Juice",
+                  "measure": "1.5 cl",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4c1"
+              }
+          ],
+          "shortDescription": "A tropical and fruity cocktail with the flavors of rum, Galliano, lime juice, and pineapple juice."
+      }
+      },
+      "AddOwnDrinkRequest": {
+        "type": "object",
+        "required": [
+          "drink",
+          "category",
+          "description",
+          "alcoholic",
+          "glass",
+          "instructions",
+          "ingredients",
+          "drinkThumb"
+        ],
+        "properties": {
+          "drink": {
+            "type": "string",
+            "description": "Тitle of the drink"
+          },
+          "description": {
+            "type": "string",
+            "description": "Drink description"
+          },
+          "alcoholic": {
+            "type": "string",
+            "description": "Alcoholic / Non alcoholic",
+            "enum": ["Alcoholic", "Non alcoholic"]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Ordinary Drink",
+              "Cocktail",
+              "Shake",
+              "Other/Unknown",
+              "Cocoa",
+              "Shot",
+              "Coffee / Tea",
+              "Homemade Liqueur",
+              "Punch / Party Drink",
+              "Beer",
+              "Soft Drink"
+            ],
+            "description": "Select drink category"
+          },
+          "glass": {
+            "type": "string",
+            "enum": [
+              "Highball glass",
+              "Cocktail glass",
+              "Old-fashioned glass",
+              "Whiskey Glass",
+              "Collins glass",
+              "Pousse cafe glass",
+              "Champagne flute",
+              "Whiskey sour glass",
+              "Cordial glass",
+              "Brandy snifter",
+              "White wine glass",
+              "Nick and Nora Glass",
+              "Hurricane glass",
+              "Coffee mug",
+              "Shot glass",
+              "Jar",
+              "Irish coffee cup",
+              "Punch bowl",
+              "Pitcher",
+              "Pint glass",
+              "Copper Mug",
+              "Wine Glass",
+              "Beer mug",
+              "Margarita / Coupette glass",
+              "Beer pilsner",
+              "Beer Glass",
+              "Parfait glass",
+              "Mason jar",
+              "Margarita glass",
+              "Martini Glass",
+              "Balloon Glass",
+              "Coupe Glass"
+            ],
+            "description": "Select drink glass"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instructions for drink preparation",
+            "example": "Shake and strain into a chilled cocktail glass"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Unique identifier for the ingredient"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Drink ingredient's measure"
+                }
+              }
+            },
+            "description": "Drink ingredients"
+          },
+          "drinkThumb": {
+            "type": "string",
+            "description": "Drink image url",
+            "format": "binary"
+          }
+        }
+      },
+      "AddOwnDrinkResponse": {
+        "type": "object",
+        "properties": {
+          "drink": {
+            "type": "string",
+            "description": "Тitle of the drink"
+          },
+          "drinkAlternate": {
+            "type": "string",
+            "description": "Alternate name for the drink"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the drink"
+          },
+          "alcoholic": {
+            "type": "string",
+            "description": "Alcoholic / Non alcoholic"
+          },
+          "glass": {
+            "type": "string",
+            "description": "Type of glass the drink should be served in"
+          },
+          "description": {
+            "type": "string",
+            "description": "Drink description"
+          },
+          "drinkThumb": {
+            "type": "string",
+            "description": "Drink image url"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the ingredient" 
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Drink ingredient's measure" 
+                },
+                "ingredientId": {
+                  "type": "string",
+                  "description": "Unique identifier for the ingredient"
+                },
+                "_id": {
+                  "type": "string",
+                  "description": "Unique identifier for the ingredient in the drink"
+                }
+              }
+            },
+            "description": "List of ingredients used in the drink"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner of the drink"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "User IDs associated with the drink"
+            },
+            "description": "List of user IDs related to the drink"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the new drink"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the drink was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the drink information was last updated"
+          }
+        },
+        "example": {
+          "drink": "CovidKiller v5",
+          "drinkAlternate": "Sorry, not specified",
+          "category": "Soft Drink",
+          "alcoholic": "Alcoholic",
+          "glass": "Beer Glass",
+          "description": "For good kill covid v5",
+          "drinkThumb": "https://res.cloudinary.com/dzvvgvwgt/image/upload/v1698700062/drink/shutterstock.jpg.jpg",
+          "ingredients": [
+              {
+                  "title": "Tequila1",
+                  "measure": "2 cl",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4b8",
+                  "_id": "6546a9e5be2bad087d921b28"
+              },
+              {
+                  "title": "Beer",
+                  "measure": "2 cl ",
+                  "ingredientId": "64f1d5c169d8333cf130fb4a",
+                  "_id": "6546a9e5be2bad087d921b29"
+              },
+              {
+                  "title": "Vodka",
+                  "measure": "3 cl",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4b9",
+                  "_id": "6546a9e5be2bad087d921b2a"
+              }
+          ],
+          "owner": "654567fe985e7dfc0b25c2b8",
+          "users": [],
+          "_id": "6546a9e5be2bad087d921b27",
+          "createdAt": "2023-11-04T20:30:29.954Z",
+          "updatedAt": "2023-11-04T20:30:29.954Z"
+      }
       }
     },
     "securitySchemes": {
