@@ -3,7 +3,6 @@ const User = require("../models/user");
 const { signToken } = require("./jwtService");
 const checkPassword = require("./passwordService");
 const Email = require("../services/emailService");
-const crypto = require("crypto");
 
 exports.registerUser = async (userData) => {
   const { email } = userData;
@@ -14,23 +13,18 @@ exports.registerUser = async (userData) => {
     throw HttpError(409, "Email already exist.");
   }
 
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  const refreshToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
-  // const resetExpires = Date.now() + 10 * 60 * 1000;
-
   const newUser = await User.create({
     ...userData,
-    refreshToken,
     userAuth,
     userFavorite,
   });
 
+  const token = signToken(newUser.id);
+  await User.findByIdAndUpdate(newUser.id, { token });
+
   newUser.password = undefined;
 
-  return { user: newUser };
+  return { user: newUser, token };
 };
 
 exports.loginUser = async (userData) => {
@@ -49,7 +43,6 @@ exports.loginUser = async (userData) => {
   const token = signToken(user.id);
   await User.findByIdAndUpdate(user.id, {
     token,
-    refreshToken: null,
     $inc: { userAuth: 1 },
   });
 
