@@ -162,7 +162,7 @@
       }
     },
     "/api/users/update": {
-      "post": {
+      "patch": {
         "tags": ["Users"],
         "summary": "User update",
         "security": [{ "Bearer": [] }],
