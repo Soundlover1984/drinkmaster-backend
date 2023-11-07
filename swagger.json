@@ -825,7 +825,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteFromFavoritesResponse"
+                  "$ref": "#/components/schemas/RemoveFromFavoritesResponse"
                 }
               }
             }
@@ -1010,7 +1010,40 @@
           }
         }
       },
-      "UpdateUserRespons": {},
+      "UpdateUserRespons": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Test"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "https://res.cloudinary.com/dzvvgvwgt/image/upload/v1699195131/drinkMaster/avatar/65456b585b4eb0cd117b6a6c.jpg"
+          }
+        },
+        "example": {
+          "name": "Test",
+          "avatar": "https://res.cloudinary.com/dzvvgvwgt/image/upload/v1699195131/drinkMaster/avatar/65456b585b4eb0cd117b6a6c.jpg"
+        }
+      },
+      "SubscribeUserRespons": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "subscribe": {
+            "type": "boolein"
+          }
+        },
+        "example": {
+          "message": "Subscribe successfully",
+          "subscribe": true
+        }
+      },
       "CategoriesResponse": {
         "type": "array",
         "items": {
@@ -1837,6 +1870,538 @@
           "_id": "6546a9e5be2bad087d921b27",
           "createdAt": "2023-11-04T20:30:29.954Z",
           "updatedAt": "2023-11-04T20:30:29.954Z"
+      }
+      },
+      "AllOwnDrinksResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total drinks"
+          },
+          "drinks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "drink": {
+                  "type": "string"
+                },
+                "drinkAlternate": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "alcoholic": {
+                  "type": "string"
+                },
+                "glass": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "drinkThumb": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "measure": {
+                        "type": "string"
+                      },
+                      "ingredientId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "owner": {
+                  "type": "string"
+                },
+                "users": [],
+                "updatedAt": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "total": 1,
+          "drinks": [
+            {
+              "_id": "6547f2b3a59eaa3c803d6760",
+              "drink": "My lemon dream ",
+              "drinkAlternate": "Sorry, not specified",
+              "category": "Cocktail",
+              "alcoholic": "Alcoholic",
+              "glass": "Cocktail glass",
+              "description": "",
+              "instructions": "Mix and drink",
+              "drinkThumb": "https://res.cloudinary.com/dzvvgvwgt/image/upload/v1699195034/drinkMaster/drink/The%20Drunken%20Botanist.jpg.jpg",
+              "ingredients": [
+                {
+                  "title": "Gin",
+                  "measure": "0",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4a6",
+                  "_id": "6547f2b3a59eaa3c803d6761"
+                },
+                {
+                  "title": "Strawberry schnapps",
+                  "measure": "0",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4a9",
+                  "_id": "6547f2b3a59eaa3c803d6762"
+                },
+                {
+                  "title": "Strawberries",
+                  "measure": "0",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4d6",
+                  "_id": "6547f2b3a59eaa3c803d6763"
+                }
+              ],
+              "owner": "65456b585b4eb0cd117b6a6c",
+              "users": [],
+              "createdAt": "2023-11-05T19:53:23.201Z",
+              "updatedAt": "2023-11-05T19:53:23.201Z"
+            }
+          ]
+        }
+      },"AllFavoritesResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total drinks"
+          },
+          "drinks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "drink": {
+                  "type": "string"
+                },
+                "drinkAlternate": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "string"
+                },
+                "video": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "IBA": {
+                  "type": "string"
+                },
+                "alcoholic": {
+                  "type": "string"
+                },
+                "glass": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "drinkThumb": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "measure": {
+                        "type": "string"
+                      },
+                      "ingredientId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "shortDescription": {
+                  "type": "string"
+                },
+                "users": [],
+                "updatedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "total": 1,
+          "drinks": [
+            {
+              "_id": "639b6de9ff77d221f190c503",
+              "drink": "Yoghurt Cooler",
+              "drinkAlternate": "Sorry, not specified",
+              "tags": "Sorry, not specified",
+              "video": "Sorry, not specified",
+              "category": "Other/Unknown",
+              "IBA": "Sorry, not specified",
+              "alcoholic": "Non alcoholic",
+              "glass": "Highball Glass",
+              "description": "Yoghurt Cooler is a refreshing and creamy cocktail that combines the tanginess of yogurt, the fruity flavors of fruit juice, and the effervescence of soda. It's a light and refreshing drink that's perfect for hot summer days or as a healthy alternative to heavier cocktails. Sip on a Yoghurt Cooler and enjoy the cooling and rejuvenating qualities of this delightful drink.",
+              "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up. Note: Use lots of ice in this one - great on hot days! To add ice: Remove the center of the cover while the blender is on - drop 3 or 4 ice cubs and blend until they're completely crushed.",
+              "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Yoghurt_Cooler.jpg",
+              "ingredients": [
+                {
+                  "_id": "654952738609e9d50eba9feb",
+                  "title": "Yoghurt",
+                  "measure": "1 cup ",
+                  "ingredientId": "64aebb7f82d96cc69e0eb4d8"
+                },
+                {
+                  "_id": "654952738609e9d50eba9fec",
+                  "title": "Fruit",
+                  "measure": "1 cup ",
+                  "ingredientId": "64f1d5d369d8333cf130fc9d"
+                },
+                {
+                  "_id": "654952738609e9d50eba9fed",
+                  "title": "Ice",
+                  "ingredientId": "64f1d5c169d8333cf130fb4d"
+                }
+              ],
+              "shortDescription": "A refreshing and creamy cocktail with yogurt, fruit juice, and a splash of soda.",
+              "updatedAt": "2023-11-06T20:18:23.809Z",
+              "users": ["65456b585b4eb0cd117b6a6c", "654275a9fed7e436add43da7"]
+            }
+          ]
+        }
+      },
+      "AddToFavoritesResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "drink": {
+            "type": "string"
+          },
+          "drinkAlternate": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "string"
+          },
+          "video": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "IBA": {
+            "type": "string"
+          },
+          "alcoholic": {
+            "type": "string"
+          },
+          "glass": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "drinkThumb": {
+            "type": "string"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "measure": {
+                  "type": "string"
+                },
+                "ingredientId": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "users": [],
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "result": {
+            "_id": "639b6de9ff77d221f190c54c",
+            "drink": "Pure Passion",
+            "drinkAlternate": "Sorry, not specified",
+            "tags": "Passion",
+            "video": "Sorry, not specified",
+            "category": "Cocktail",
+            "IBA": "Sorry, not specified",
+            "alcoholic": "Alcoholic",
+            "glass": "Whiskey sour glass",
+            "description": "Pure Passion is a passionate and tropical cocktail that captures the essence of exotic fruits. It is made with passion fruit juice, rum, lime juice, and a touch of sugar. The combination of flavors creates a refreshing and vibrant drink that is perfect for lounging by the pool or enjoying a summer evening with friends. Indulge in the pure passion of this delightful cocktail.",
+            "instructions": "Mix up all ingredients with a cocktail stirrer and serve with crushed ice with mint and edible flour if available.",
+            "instructionsES": "Mezcle todos los ingredientes con un agitador de cóctel y sirva con hielo picado con menta y harina comestible si está disponible.",
+            "instructionsDE": "Alle Zutaten mit einem Cocktailrührer mixen und mit Crushed Ice mit Minze und Speisemehl, falls vorhanden, servieren.",
+            "instructionsFR": "Mélangez tous les ingrédients avec un agitateur à cocktail et servez avec de la glace pilée à la menthe et de la farine alimentaire si disponible.",
+            "instructionsIT": "Mescolare tutti gli ingredienti con un agitatore per cocktail e servire con ghiaccio tritato con menta e farina commestibile se disponibile.",
+            "instructionsRU": "Смешайте все ингредиенты миксером для коктейлей и подавайте с колотым льдом с мятой и пищевой мукой, если таковая имеется.",
+            "instructionsPL": "Wymieszaj wszystkie składniki za pomocą mieszadła do koktajli i podawaj z kruszonym lodem z miętą i mąką jadalną, jeśli jest dostępna.",
+            "instructionsUK": "Змішайте всі інгредієнти мішалкою для коктейлів і подавайте з колотим льодом з м'ятою і харчовим борошном, якщо є.",
+            "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Pure_Passion.jpg",
+            "ingredients": [
+              {
+                "_id": "6549551c8609e9d50ebbd7da",
+                "title": "Rum",
+                "measure": "40 ml",
+                "ingredientId": "64aebb7f82d96cc69e0eb4cb"
+              },
+              {
+                "_id": "6549551c8609e9d50ebbd7db",
+                "title": "Passoa",
+                "measure": "20 ml",
+                "ingredientId": "64f1d5c169d8333cf130fb52"
+              },
+              {
+                "_id": "6549551c8609e9d50ebbd7dc",
+                "title": "Lime Juice",
+                "measure": "30 ml",
+                "ingredientId": "64aebb7f82d96cc69e0eb4c1"
+              },
+              {
+                "_id": "6549551c8609e9d50ebbd7dd",
+                "title": "Passion fruit syrup",
+                "measure": "15 ml",
+                "ingredientId": "64f1d5c169d8333cf130fb55"
+              },
+              {
+                "_id": "6549551c8609e9d50ebbd7de",
+                "title": "Peach Bitters",
+                "measure": "Dash",
+                "ingredientId": "64f1d5c269d8333cf130fb58"
+              },
+              {
+                "_id": "6549551c8609e9d50ebbd7df",
+                "title": "Mint",
+                "measure": "Garnish with",
+                "ingredientId": "64f1d5c269d8333cf130fb5b"
+              }
+            ],
+            "shortDescription": "A passionate and tropical cocktail with passion fruit, rum, and citrus juices.",
+            "updatedAt": "2023-11-06T21:05:32.555Z",
+            "users": ["654942f88609e9d50eb7d7fb", "65456b585b4eb0cd117b6a6c"]
+          }
+        }
+      },
+      "RemoveFromFavoritesResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "drink": {
+                "type": "string"
+              },
+              "drinkAlternate": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "string"
+              },
+              "video": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "IBA": {
+                "type": "string"
+              },
+              "alcoholic": {
+                "type": "string"
+              },
+              "glass": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "instructions": {
+                "type": "string"
+              },
+              "instructionsES": {
+                "type": "string"
+              },
+              "instructionsDE": {
+                "type": "string"
+              },
+              "instructionsFR": {
+                "type": "string"
+              },
+              "instructionsIT": {
+                "type": "string"
+              },
+              "instructionsRU": {
+                "type": "string"
+              },
+              "instructionsPL": {
+                "type": "string"
+              },
+              "instructionsUK": {
+                "type": "string"
+              },
+              "drinkThumb": {
+                "type": "string"
+              },
+              "ingredients": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "measure": {
+                      "type": "string"
+                    },
+                    "ingredientId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "shortDescription": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "result": {
+              "_id": "639b6de9ff77d221f190c57b",
+              "drink": "Drinking Chocolate",
+              "drinkAlternate": "Sorry, not specified",
+              "tags": "Sorry, not specified",
+              "video": "Sorry, not specified",
+              "category": "Cocoa",
+              "IBA": "Sorry, not specified",
+              "alcoholic": "Non alcoholic",
+              "glass": "Coffee mug",
+              "description": "Drinking Chocolate is a decadent and indulgent beverage that offers the ultimate chocolate experience. This rich and creamy drink is made by melting high-quality chocolate and combining it with milk or cream to create a velvety and luxurious beverage. Sip on a cup of Drinking Chocolate and let the luscious flavors of chocolate envelop your senses in pure bliss.",
+              "instructions": "Heat the cream and milk with the cinnamon and vanilla bean very slowly for 15-20 minutes. (If you don't have any beans add 1-2 tsp of vanilla after heating). Remove the bean and cinnamon. Add the chocolate. Mix until fully melted. Serve topped with some very dense fresh whipped cream. Serves 1-2 depending upon how much of a glutton you are. For a richer chocolate, use 4 oz of milk, 4 oz of cream, 4 oz of chocolate. Serve in coffee mug.",
+              "instructionsES": "Calentar la nata y la leche con la canela y la vaina de vainilla muy lentamente durante 15-20 minutos. (Si no tiene frijoles, agregue 1-2 cucharaditas de vainilla después de calentar). Retire el frijol y la canela. Agrega el chocolate. Mezcle hasta que esté completamente derretido. Servir cubierto con un poco de crema batida fresca muy densa. Sirve 1-2 dependiendo de lo glotón que seas. Para un chocolate más rico, use 4 oz de leche, 4 oz de crema, 4 oz de chocolate. Servir en taza de café.",
+              "instructionsDE": "Sahne und Milch mit Zimt und Vanilleschote sehr langsam für 15-20 Minuten erhitzen. (Wenn Sie keine Schoten haben, geben Sie nach dem Erhitzen 1-2 Teelöffel Vanillearoma dazu). Bohnen und Zimt entfernen. Fügen Sie die Schokolade hinzu. Mischen, bis sie vollständig geschmolzen sind. Mit sehr dicker, frischer Schlagsahne servieren. Für 1-2 Personen. Für eine reichhaltigere Schokolade verwenden Sie 4 oz Milch, 4 oz Sahne, 4 oz Schokolade. In einer Kaffeetasse servieren.",
+              "instructionsFR": "Faire chauffer la crème et le lait avec la cannelle et la gousse de vanille très lentement pendant 15-20 minutes. (Si vous n'avez pas de gousses, ajoutez 1-2 cuillères à café de vanille après chauffage). Retirez le haricot et la cannelle. Ajouter le chocolat. Mélanger jusqu'à ce qu'il soit complètement fondu. Servir nappé d'une chantilly fraîche très dense. Pour 1 à 2 portions selon votre degré de glouton. Pour un chocolat plus riche, utilisez 4 oz de lait, 4 oz de crème, 4 oz de chocolat. Servir dans une tasse à café.",
+              "instructionsIT": "Riscaldare la panna e il latte con la cannella e il baccello di vaniglia molto lentamente per 15-20 minuti.\r\n(Se non hai i baccelli, aggiungi 1-2 cucchiaini di aroma di vaniglia dopo il riscaldamento).\r\nRimuovere i fagioli e la cannella.\r\nAggiungi il cioccolato.\r\nMescolare fino a completo scioglimento.\r\nServire con panna montata fresca e molto densa.\r\nPer 1-2 persone.\r\nPer un cioccolato più ricco, usa 120 ml di latte, 120 ml di panna e 100 ml di cioccolato.\r\nServire in una tazza da caffè.",
+              "instructionsRU": "Очень медленно нагревайте сливки и молоко с корицей и ванилью в течение 15-20 минут. (Если у вас нет фасоли, после нагревания добавьте 1-2 чайные ложки ванили). Удалите фасоль и корицу. Добавьте шоколад. Смешайте до полного растворения. Подавайте с очень густыми свежими взбитыми сливками. На 1-2 порции, в зависимости от того, насколько вы обжора. Для более насыщенного шоколада используйте 4 унции молока, 4 унции сливок, 4 унции шоколада. Подавать в кофейной кружке.",
+              "instructionsPL": "Śmietanę i mleko z cynamonem i wanilią podgrzewaj bardzo powoli przez 15-20 minut. (Jeśli nie masz fasoli, po podgrzaniu dodaj 1-2 łyżeczki wanilii). Usuń fasolę i cynamon. Dodaj czekoladę. Mieszaj, aż całkowicie się rozpuści. Podawaj z bardzo gęstą, świeżą bitą śmietaną. Porcje 1-2 w zależności od tego, jak bardzo jesteś żarłokiem. Aby uzyskać bogatszą czekoladę, użyj 4 uncje mleka, 4 uncje śmietany, 4 uncje czekolady. Podawaj w kubku do kawy.",
+              "instructionsUK": "Вершки і молоко з корицею і стручком ванілі дуже повільно нагрійте протягом 15-20 хвилин. (Якщо у вас немає квасолі, додайте 1-2 ч.л. ванілі після нагрівання). Видаліть квасолю і корицю. Додайте шоколад. Перемішуйте до повного розчинення. Подавайте, поливши дуже густими свіжими збитими вершками. На 1-2 порції залежно від того, наскільки ви ненажера. Щоб отримати насичений шоколад, використовуйте 4 унції молока, 4 унції вершків, 4 унції шоколаду. Подавати в чашці для кави.",
+              "drinkThumb": "https://ftp.goit.study/img/drinkify/recipes/Drinking_Chocolate.jpg",
+              "ingredients": [
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c1",
+                      "title": "Heavy cream",
+                      "measure": "2 oz ",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4e3"
+                  },
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c2",
+                      "title": "Milk",
+                      "measure": "6-8 oz ",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4d5"
+                  },
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c3",
+                      "title": "Cinnamon",
+                      "measure": "1 stick ",
+                      "ingredientId": "64f1d5ca69d8333cf130fbfa"
+                  },
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c4",
+                      "title": "Vanilla",
+                      "measure": "1 ",
+                      "ingredientId": "64f1d5ca69d8333cf130fbfd"
+                  },
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c5",
+                      "title": "Chocolate",
+                      "measure": "2 oz finely chopped dark ",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4e2"
+                  },
+                  {
+                      "_id": "6549ddd00bbcfbb6a23ad3c6",
+                      "title": "Whipped cream",
+                      "measure": "Fresh ",
+                      "ingredientId": "64f1d5c069d8333cf130fb38"
+                  }
+              ],
+              "shortDescription": "A decadent and indulgent beverage made with rich and creamy drinking chocolate.",
+              "updatedAt": "2023-11-07T06:48:48.682Z",
+              "users": [
+                  "653e8a3de318362e7e9578d3",
+                  "654275a9fed7e436add43da7"
+              ]
+          }
       }
       }
     },
