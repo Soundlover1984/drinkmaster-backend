@@ -12,34 +12,34 @@ const current = controllerWrapper(async (req, res) => {
 });
 
 const update = controllerWrapper(async (req, res) => {
-  const result = await updateUser(req.body, req.user, req.file);
+  const { name, avatar } = await updateUser(req.body, req.user, req.file);
 
   res.status(200).json({
     message: "Success",
-    result,
+    name,
+    avatar,
   });
 });
 
 const subscribe = controllerWrapper(async (req, res) => {
-  const result = await subscribeUser(req.user);
+  const { subscribe } = await subscribeUser(req.user);
 
   res.status(200).json({
-    message: "Success",
-    result,
+    message: "Subscribe successfully",
+    subscribe,
   });
 });
 
 const theme = controllerWrapper(async (req, res) => {
   const user = req.user;
   const currentTheme = req.body.theme;
-  console.log(currentTheme);
-  const subscribeUser = await User.findByIdAndUpdate(user.id, {
+  const { theme } = await User.findByIdAndUpdate(user.id, {
     theme: currentTheme,
   });
-  console.log(currentTheme);
+
   res.status(200).json({
     message: "Success",
-    subscribeUser,
+    theme: theme,
   });
 });
 
