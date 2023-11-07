@@ -715,9 +715,27 @@
           }
         ],
         "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "The ID of the drink to remove.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOwnDrinkRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Drink successfully removed"
+            "description": "Drink successfully removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteOwnDrinkResponse"
+                }
+              }
+            }
           },
           "403": {
             "description": "User is not authorized to delete this drink"
@@ -819,6 +837,17 @@
           }
         ],
         "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "The ID of the drink to remove from favorites.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFromFavoritesRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful response",
@@ -1985,7 +2014,160 @@
             }
           ]
         }
-      },"AllFavoritesResponse": {
+      },
+      "DeleteOwnDrinkRequest": {
+        "type": "object",
+        "required": ["id"],
+
+        "properties": {
+          "drinkId": {
+            "type": "string",
+            "description": "drink Id"
+          }
+        },
+        "example": { "drinkId": "639b6de9ff77d221f190c50f" }
+      },
+      "DeleteOwnDrinkResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "drink": {
+                  "type": "string",
+                  "description": "Тitle of the drink"
+                },
+                "drinkAlternate": {
+                  "type": "string",
+                  "description": "Alternative name drink"
+                },
+                "tags": {
+                  "type": "string",
+                  "description": "Tags for drink"
+                },
+                "video": {
+                  "type": "string",
+                  "description": "Link video for drink"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category drink"
+                },
+                "IBA": {
+                  "type": "string",
+                  "description": "IBA drink"
+                },
+                "alcoholic": {
+                  "type": "string",
+                  "description": "Alcoholic or non alcoholic drink"
+                },
+                "glass": {
+                  "type": "string",
+                  "description": "Glass for drink"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description for drink"
+                },
+                "instructions": {
+                  "type": "string",
+                  "description": "Instructions for make drink on English language"
+                },
+                "instructionsUK": {
+                  "type": "string",
+                  "description": "Instructions for make drink on Ukrainian language"
+                },
+                "drinkThumb": {
+                  "type": "string",
+                  "description": "Link to drink picture, big size"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "Name of ingredient"
+                      },
+                      "measure": {
+                        "type": "string",
+                        "description": "Volume of ingredient"
+                      },
+                      "ingredientId": {
+                        "type": "string",
+                        "description": "ingredient id"
+                      }
+                    }
+                  }
+                },
+                "shortDescription": {
+                  "type": "string",
+                  "description": "Short drink description"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "description": "Users that added this drink to favorites",
+                    "type": "string",
+                    "Example": "650c80426c3c09abd848e678"
+                  }
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "User that created this drink",
+                  "Example": "654567fe985e7dfc0b25c2b8"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "result": {
+              "_id": "6546ba99fe482e3c0c631d7d",
+              "drink": "CovidKiller v6",
+              "drinkAlternate": "Sorry, not specified",
+              "category": "Soft Drink",
+              "alcoholic": "Alcoholic",
+              "glass": "Beer Glass",
+              "description": "For good kill covid v6",
+              "drinkThumb": "https://res.cloudinary.com/dzvvgvwgt/image/upload/v1698700062/drink/shutterstock.jpg.jpg",
+              "ingredients": [
+                  {
+                      "title": "Tequila",
+                      "measure": "2 cl",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4b8",
+                      "_id": "6546ba99fe482e3c0c631d7e"
+                  },
+                  {
+                      "title": "Beer",
+                      "measure": "2 cl ",
+                      "ingredientId": "64f1d5c169d8333cf130fb4a",
+                      "_id": "6546ba99fe482e3c0c631d7f"
+                  },
+                  {
+                      "title": "Vodka",
+                      "measure": "3 cl",
+                      "ingredientId": "64aebb7f82d96cc69e0eb4b9",
+                      "_id": "6546ba99fe482e3c0c631d80"
+                  }
+              ],
+              "owner": "654567fe985e7dfc0b25c2b8",
+              "users": [],
+              "createdAt": "2023-11-04T21:41:45.467Z",
+              "updatedAt": "2023-11-04T21:41:45.467Z"
+          }
+      }
+      },
+      "AllFavoritesResponse": {
         "type": "object",
         "properties": {
           "total": {
@@ -2237,6 +2419,18 @@
             "users": ["654942f88609e9d50eb7d7fb", "65456b585b4eb0cd117b6a6c"]
           }
         }
+      },
+      "RemoveFromFavoritesRequest": {
+        "type": "object",
+        "required": ["id"],
+
+        "properties": {
+          "drinkId": {
+            "type": "string",
+            "description": "drink Id"
+          }
+        },
+        "example": { "drinkId": "639b6de9ff77d221f190c50f" }
       },
       "RemoveFromFavoritesResponse": {
         "type": "object",
